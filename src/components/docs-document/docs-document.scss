@@ -1,0 +1,39 @@
+docs-document {
+  grid-area: document;
+  padding: 2rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: $breakpoint-md) {
+    padding: 1.6rem;
+  }
+}
+
+docs-document > *:first-child {
+  margin-top: 0.5rem;
+  color: var(--blackish);
+}
+
+docs-document main {
+  flex: 1;
+}
+
+.open-preview {
+  align-items: center;
+  align-self: start;
+  background-color: #dfedff;
+  border-radius: 4px;
+  display: inline-flex;
+  font-size: 13px;
+  line-height: 1;
+  padding: 8px;
+
+  @media (min-width: $breakpoint-lg) {
+    display: none;
+  }
+}
+
+.open-preview > ion-icon {
+  margin-right: 0.25em;
+}

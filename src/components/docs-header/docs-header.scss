@@ -1,0 +1,138 @@
+@import './community-dropdown';
+
+docs-header {
+  background-color: var(--header-background);
+  border-color: var(--header-border, var(--header-background));
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  color: var(--header-color-secondary);
+  grid-area: header;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative;
+
+  @media (max-width: $breakpoint-md) {
+    border-width: 0 0 1px 1px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+docs-header,
+docs-header > nav {
+  align-items: center;
+  display: flex;
+  line-height: 1;
+}
+
+docs-header > nav {
+  width: 100%;
+
+  @media (min-width: $breakpoint-md) {
+    justify-content: flex-end;
+  }
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  display: none;
+  line-height: 0;
+  padding: 0;
+  width: 1.75rem;
+
+  @media (max-width: $breakpoint-md) {
+    display: block;
+  }
+}
+
+.menu-toggle:focus {
+  outline: none;
+}
+
+.menu-toggle svg {
+  fill: currentColor;
+}
+
+.menu-toggle:hover svg {
+  fill: var(--header-color);
+}
+
+.docs-logo {
+  align-items: center;
+  color: var(--header-color);
+  display: flex;
+  font-family: var(--font-family-eina);
+  font-size: 18px;
+  font-weight: 700;
+  left: 50%;
+  letter-spacing: -0.02em;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease;
+
+  @media (min-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.docs-logo:hover {
+  opacity: 0.9;
+}
+
+.docs-logo svg {
+  fill: currentColor;
+  height: auto;
+  margin-right: 0.2em;
+  width: 1.5rem;
+}
+
+.docs-logo span {
+  height: 0.8em;
+}
+
+.github-link {
+  font-size: 13px;
+  font-weight: 600;
+  margin-left: 2em;
+  transition: color 200ms ease;
+
+  &:hover {
+    color: var(--header-color);
+  }
+
+  @media (max-width: $breakpoint-md) {
+    display: none;
+  }
+}
+
+.github-link .new-tab {
+  height: 0.8em;
+  margin-left: 0.4em;
+  width: auto;
+}
+
+.github-link .new-tab__box,
+.github-link .new-tab__arrow {
+  transition: fill 200ms ease, opacity 200ms ease;
+}
+
+.github-link .new-tab__box {
+  opacity: 0.25;
+}
+
+.github-link .new-tab__box,
+.github-link .new-tab__arrow {
+  fill: var(--header-color-secondary);
+}
+
+.github-link:hover .new-tab__box {
+  opacity: 0.5;
+}
+
+.github-link:hover .new-tab__arrow {
+  fill: var(--header-color);
+}

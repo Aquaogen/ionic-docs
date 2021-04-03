@@ -1,0 +1,136 @@
+.page-index {
+  --content-max: 800px;
+}
+
+.page-index main {
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-column-gap: 20px;
+    grid-row-gap: 19px;
+    padding-bottom: 32px;
+
+    @media (max-width: 860px)  {
+      display: flex;
+      flex-wrap: wrap;
+
+      card-link {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  .card-introduction a,
+  .card-installation a,
+  .card-ui-components a,
+  .card-api-reference a,
+  .card-native-apis a,
+  .card-theming a {
+    &::before,
+    &::after {
+      background-image: url('/docs/assets/img/home-thumbnails.png');
+      background-size: 160px;
+      width: 80px;
+      height: 156px;
+      top: calc(50% - 78px);
+    }
+  }
+
+  .card-introduction a {
+    &::before { background-position: 0 0; }
+    &::after { background-position: -80px 0; }
+  }
+  .card-installation a {
+    &::before { background-position: 0 -156px; }
+    &::after { background-position: -80px -156px; }
+  }
+  .card-ui-components a {
+    &::before { background-position: 0 -312px; }
+    &::after { background-position: -80px -312px; }
+  }
+  .card-api-reference a {
+    &::before { background-position: 0 -468px; }
+    &::after { background-position: -80px -468px; }
+  }
+  .card-native-apis a {
+    &::before { background-position: 0 -624px; }
+    &::after { background-position: -80px -624px; }
+  }
+  .card-theming a {
+    &::before { background-position: 0 -780px; }
+    &::after { background-position: -80px -780px; }
+  }
+
+  .others {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid #e5e9ef;
+
+    li {
+      border-bottom: 1px solid #e5e9ef;
+      margin-bottom: 0;
+    }
+
+    a,
+    stencil-route-link {
+      color: inherit;
+    }
+
+    a {
+      padding: 16px 8px 16px 72px;
+      position: relative;
+      display: block;
+
+      &::before,
+      &::after {
+        background: url('/docs/assets/img/home-thumbnails-sm.png') no-repeat 0 0;
+        background-size: 48px;
+        width: 48px;
+        height: 48px;
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+      }
+
+      &::after {
+        opacity: 0;
+        transition: .2s opacity ease;
+      }
+
+      &:hover::after {
+        opacity: 1;
+      }
+    }
+
+    .cli a {
+      &::after { background-position: 0 -48px; }
+    }
+    .resources a {
+      &::before { background-position: 0 -96px; }
+      &::after { background-position: 0 -144px; }
+    }
+    ._ionicons a {
+      &::before { background-position: 0 -192px; }
+      &::after { background-position: 0 -240px; }
+    }
+    .faq a {
+      &::before { background-position: 0 -288px; }
+      &::after { background-position: 0 -336px; }
+    }
+
+    strong {
+      color: #151c29;
+      display: block;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    span {
+      color: #768090;
+      font-weight: 400;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+  }
+}

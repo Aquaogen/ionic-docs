@@ -1,0 +1,87 @@
+@import './tomorrow';
+
+code-block {
+  background-color: #f5f6f9;
+  border-radius: 4px;
+  display: block;
+  font-family: var(--font-family-code);
+  font-size: 12px;
+  margin: 1.5em 0;
+  position: relative;
+  -webkit-font-smoothing: initial;
+}
+
+code-block .label {
+  color: #bdc5d1;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  padding: 0.75em;
+  position: absolute;
+  right: 0;
+  text-align: right;
+  text-transform: uppercase;
+  top: 0;
+}
+
+code-block pre,
+code-block code {
+  font-family: inherit;
+}
+
+code-block pre {
+  line-height: 2;
+  margin: 0;
+}
+
+code-block .scroll-area {
+  overflow-x: auto;
+  padding: 2em 2em;
+}
+
+code-block .scroll-area::after {
+  position: absolute;
+  content: '';
+  right: 0;
+  top: 2em;
+  bottom: 2em;
+  width: 2em;
+  background: linear-gradient(to right,
+    rgba(#f5f6f9, .0),
+    rgba(#f5f6f9, .9) 80%,
+    #f5f6f9
+  );
+}
+
+code-block pre code {
+  display: inline-block;
+  margin-right: 2em !important;
+}
+
+code-block[language="shell"] {
+  background-color: #2b313c;
+  border-radius: 7px;
+  -webkit-font-smoothing: inherit;
+}
+
+code-block[language="shell"] code {
+  font-size: 13px;
+  // TODO: doesn't work if multiple commands are used
+  // white-space: nowrap;
+}
+
+code-block[language="shell"] .scroll-area {
+  overflow-x: scroll;
+}
+
+code-block[language="shell"] .scroll-area::after {
+  background: linear-gradient(to right,
+    rgba(#2b313c, .0),
+    rgba(#2b313c, .9) 80%,
+    #2b313c
+  );
+}
+
+code-block[language="shell"] > .label {
+  display: none;
+}
