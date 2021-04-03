@@ -1,0 +1,35 @@
+import { h } from '../app.core.js';
+var CodeBlock = /** @class */ (function () {
+    function CodeBlock() {
+    }
+    CodeBlock.prototype.render = function () {
+        return [
+            h("div", { class: "label" }, this.language || ''),
+            h("div", { class: "scroll-area" }, h("pre", null, h("code", null, h("slot", null))))
+        ];
+    };
+    Object.defineProperty(CodeBlock, "is", {
+        get: function () { return "code-block"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CodeBlock, "properties", {
+        get: function () {
+            return {
+                "language": {
+                    "type": String,
+                    "attr": "language"
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CodeBlock, "style", {
+        get: function () { return "/**style-placeholder:code-block:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return CodeBlock;
+}());
+export { CodeBlock };

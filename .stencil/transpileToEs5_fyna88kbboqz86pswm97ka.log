@@ -1,0 +1,58 @@
+App.loadBundle('/**:bundle-id:**/', ['exports'], function (exports) {
+    var h = window.App.h;
+    var FileTreeDirectory = /** @class */ (function () {
+        function FileTreeDirectory() {
+            this.collapsed = false;
+        }
+        FileTreeDirectory.prototype.hostData = function () {
+            var _a;
+            return {
+                class: (_a = {},
+                    _a['directory'] = true,
+                    _a["collapsed"] = this.collapsed,
+                    _a),
+            };
+        };
+        FileTreeDirectory.prototype.render = function () {
+            return [
+                h("div", { class: "name" }, this.name, "/"),
+                this.collapsed ? null :
+                    h("div", { class: "children" }, h("slot", null)),
+            ];
+        };
+        Object.defineProperty(FileTreeDirectory, "is", {
+            get: function () { return "file-tree-directory"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(FileTreeDirectory, "encapsulation", {
+            get: function () { return "shadow"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(FileTreeDirectory, "properties", {
+            get: function () {
+                return {
+                    "collapsed": {
+                        "type": Boolean,
+                        "attr": "collapsed"
+                    },
+                    "name": {
+                        "type": String,
+                        "attr": "name"
+                    }
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(FileTreeDirectory, "style", {
+            get: function () { return "/**style-placeholder:file-tree-directory:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return FileTreeDirectory;
+    }());
+    exports.FileTreeDirectory = FileTreeDirectory;
+    Object.defineProperty(exports, '__esModule', { value: true });
+});

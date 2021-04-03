@@ -1,0 +1,163 @@
+App.loadBundle('/**:bundle-id:**/', ['exports'], function (exports) {
+    var h = window.App.h;
+    function componentToHex(c) {
+        var hex = c.toString(16);
+        return hex.length === 1 ? "0" + hex : hex;
+    }
+    function expandHex(hex) {
+        var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, function (_m, r, g, b) {
+            return r + r + g + g + b + b;
+        });
+        return "#" + hex.replace('#', '');
+    }
+    function hexToRGB(hex) {
+        hex = expandHex(hex);
+        hex = hex.replace('#', '');
+        var intValue = parseInt(hex, 16);
+        return {
+            r: (intValue >> 16) & 255,
+            g: (intValue >> 8) & 255,
+            b: intValue & 255
+        };
+    }
+    function hslToRGB(_a) {
+        var h = _a.h, s = _a.s, l = _a.l;
+        h = h / 360;
+        s = s / 100;
+        l = l / 100;
+        if (s === 0) {
+            l = Math.round(l * 255);
+            return {
+                r: l,
+                g: l,
+                b: l
+            };
+        }
+        var hue2rgb = function (p, q, t) {
+            if (t < 0)
+                t += 1;
+            if (t > 1)
+                t -= 1;
+            if (t < 1 / 6)
+                return p + (q - p) * 6 * t;
+            if (t < 1 / 2)
+                return q;
+            if (t < 2 / 3)
+                return p + (q - p) * (2 / 3 - t) * 6;
+            return p;
+        }, q = l < 0.5 ? l * (1 + s) : l + s - l * s, p = 2 * l - q, r = hue2rgb(p, q, h + (1 / 3)), g = hue2rgb(p, q, h), b = hue2rgb(p, q, h - (1 / 3));
+        return {
+            r: Math.round(r * 255),
+            g: Math.round(g * 255),
+            b: Math.round(b * 255)
+        };
+    }
+    function mixColors(color, mixColor, weight) {
+        if (weight === void 0) { weight = .5; }
+        var colorRGB = color.rgb, mixColorRGB = mixColor.rgb, mixColorWeight = 1 - weight;
+        return {
+            r: Math.round(weight * mixColorRGB.r + mixColorWeight * colorRGB.r),
+            g: Math.round(weight * mixColorRGB.g + mixColorWeight * colorRGB.g),
+            b: Math.round(weight * mixColorRGB.b + mixColorWeight * colorRGB.b)
+        };
+    }
+    function rgbToHex(_a) {
+        var r = _a.r, g = _a.g, b = _a.b;
+        return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    }
+    function rgbToHSL(_a) {
+        var r = _a.r, g = _a.g, b = _a.b;
+        r = Math.max(Math.min(r / 255, 1), 0);
+        g = Math.max(Math.min(g / 255, 1), 0);
+        b = Math.max(Math.min(b / 255, 1), 0);
+        var max = Math.max(r, g, b), min = Math.min(r, g, b), l = Math.min(1, Math.max(0, (max + min) / 2));
+        var d, h, s;
+        if (max !== min) {
+            d = max - min;
+            s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+            if (max === r) {
+                h = (g - b) / d + (g < b ? 6 : 0);
+            }
+            else if (max === g) {
+                h = (b - r) / d + 2;
+            }
+            else {
+                h = (r - g) / d + 4;
+            }
+            h = h / 6;
+        }
+        else {
+            h = s = 0;
+        }
+        return {
+            h: Math.round(h * 360),
+            s: Math.round(s * 100),
+            l: Math.round(l * 100)
+        };
+    }
+    function rgbToYIQ(_a) {
+        var r = _a.r, g = _a.g, b = _a.b;
+        return ((r * 299) + (g * 587) + (b * 114)) / 1000;
+    }
+    var Color = /** @class */ (function () {
+        function Color(value) {
+            if (typeof (value) === 'string' && /rgb\(/.test(value)) {
+                var matches = /rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)/.exec(value);
+                value = { r: parseInt(matches[0], 10), g: parseInt(matches[1], 10), b: parseInt(matches[2], 10) };
+            }
+            else if (typeof (value) === 'string' && /hsl\(/.test(value)) {
+                var matches = /hsl\((\d{1,3}), ?(\d{1,3}%), ?(\d{1,3}%)\)/.exec(value);
+                value = { h: parseInt(matches[0], 10), s: parseInt(matches[1], 10), l: parseInt(matches[2], 10) };
+            }
+            if (typeof (value) === 'string') {
+                value = value.replace(/\s/g, '');
+                this.hex = expandHex(value);
+                this.rgb = hexToRGB(this.hex);
+                this.hsl = rgbToHSL(this.rgb);
+            }
+            else if ('r' in value && 'g' in value && 'b' in value) {
+                this.rgb = value;
+                this.hex = rgbToHex(this.rgb);
+                this.hsl = rgbToHSL(this.rgb);
+            }
+            else if ('h' in value && 's' in value && 'l' in value) {
+                this.hsl = value;
+                this.rgb = hslToRGB(this.hsl);
+                this.hex = rgbToHex(this.rgb);
+            }
+            else {
+                return null;
+            }
+            this.yiq = rgbToYIQ(this.rgb);
+        }
+        Color.isColor = function (value) {
+            if (/rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)/.test(value))
+                return true;
+            return /(^#[0-9a-fA-F]+)/.test(value.trim());
+        };
+        Color.prototype.contrast = function (threshold) {
+            if (threshold === void 0) { threshold = 128; }
+            return new Color((this.yiq >= threshold ? '#000' : '#fff'));
+        };
+        Color.prototype.mix = function (from, amount) {
+            if (amount === void 0) { amount = .5; }
+            var base = from instanceof Color ? from : new Color(from);
+            return new Color(mixColors(this, base, amount));
+        };
+        Color.prototype.shade = function (weight) {
+            if (weight === void 0) { weight = .12; }
+            return this.mix({ r: 0, g: 0, b: 0 }, weight);
+        };
+        Color.prototype.tint = function (weight) {
+            if (weight === void 0) { weight = .1; }
+            return this.mix({ r: 255, g: 255, b: 255 }, weight);
+        };
+        Color.prototype.toList = function () {
+            var _a = this.rgb, r = _a.r, g = _a.g, b = _a.b;
+            return r + "," + g + "," + b;
+        };
+        return Color;
+    }());
+    exports.Color = Color;
+});

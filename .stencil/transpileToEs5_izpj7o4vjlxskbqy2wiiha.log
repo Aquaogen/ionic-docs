@@ -1,0 +1,68 @@
+import { h } from '../app.core.js';
+var TabGroup = /** @class */ (function () {
+    function TabGroup() {
+        var _this = this;
+        this.toTabLink = function (tabName) {
+            return (h("a", { onClick: function () { return _this.selectTab(tabName); }, class: {
+                    'tab-link': true,
+                    'is-selected': _this.selected === tabName
+                } }, tabName));
+        };
+        this.toTabSlot = function (tabName) {
+            return (h("div", { class: {
+                    'tab': true,
+                    'is-selected': _this.selected === tabName
+                } }, h("slot", { name: tabName })));
+        };
+    }
+    TabGroup.prototype.componentWillLoad = function () {
+        if (this.tabs && this.tabs.trim().length) {
+            this.tabList = this.tabs.split(/[^\w-]+/);
+            this.selected = this.tabList.indexOf(this.initial) >= 0
+                ? this.initial
+                : this.tabList[0];
+        }
+    };
+    TabGroup.prototype.selectTab = function (tabName) {
+        this.selected = tabName;
+    };
+    TabGroup.prototype.render = function () {
+        if (!this.tabList) {
+            return h("slot", null);
+        }
+        return [
+            h("header", null, this.tabList.map(this.toTabLink))
+        ].concat(this.tabList.map(this.toTabSlot));
+    };
+    Object.defineProperty(TabGroup, "is", {
+        get: function () { return "tab-group"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TabGroup, "properties", {
+        get: function () {
+            return {
+                "initial": {
+                    "type": String,
+                    "attr": "initial"
+                },
+                "selected": {
+                    "state": true
+                },
+                "tabs": {
+                    "type": String,
+                    "attr": "tabs"
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(TabGroup, "style", {
+        get: function () { return "/**style-placeholder:tab-group:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return TabGroup;
+}());
+export { TabGroup };

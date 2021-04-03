@@ -1,0 +1,1 @@
+const e=window.App.h;class t{render(){return e("slot",null)}static get is(){return"file-tree"}static get encapsulation(){return"shadow"}static get style(){return".sc-file-tree-h{display:block;background-color:#2b313c;border-radius:7px;padding:2em;font-size:14px;font-weight:600;letter-spacing:normal;line-height:2;color:hsla(0,0%,100%,.9);overflow:scroll}"}}export{t as FileTree};

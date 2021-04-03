@@ -1,0 +1,100 @@
+var ComponentPreview = /** @class */ (function () {
+    function ComponentPreview() {
+        var _this = this;
+        this.handleActive = function (active) {
+            window.history.replaceState(null, null, "#" + active.id);
+            _this.previewMessage.emit({
+                active: active.id
+            });
+        };
+        this.observeElement = function (el) {
+            if (el instanceof HTMLElement) {
+                _this.observer.observe(el);
+            }
+        };
+        this.linkAPIRef = function (el) {
+            var link = _this.doc.createElement('a');
+            link.className = 'api-link';
+            link.href = "/docs/api/" + el.id;
+            link.textContent = 'API ›';
+            link.title = el.textContent.trim() + " API Reference";
+            el.appendChild(link);
+        };
+    }
+    ComponentPreview.prototype.componentWillLoad = function () {
+        this.handleActive = debounce(this.handleActive, 100);
+        this.observer = new IntersectionObserver(this.handleIntersection.bind(this), {
+            root: this.doc.querySelector('docs-content'),
+            rootMargin: '0px 0px -95% 0px',
+            threshold: 0
+        });
+    };
+    ComponentPreview.prototype.handleIntersection = function (entries) {
+        entries
+            .filter(function (entry) { return entry.isIntersecting; })
+            .map(function (entry) { return entry.target; })
+            .forEach(this.handleActive);
+    };
+    ComponentPreview.prototype.componentWillUnload = function () {
+        this.observer.disconnect();
+    };
+    ComponentPreview.prototype.componentDidLoad = function () {
+        var contentEl = this.el.parentElement.parentElement;
+        var headings = Array.from(contentEl.querySelectorAll('h2'));
+        headings.forEach(this.observeElement);
+        headings.forEach(this.linkAPIRef);
+    };
+    ComponentPreview.prototype.render = function () {
+        return null;
+    };
+    Object.defineProperty(ComponentPreview, "is", {
+        get: function () { return "component-preview"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ComponentPreview, "properties", {
+        get: function () {
+            return {
+                "doc": {
+                    "context": "document"
+                },
+                "el": {
+                    "elementRef": true
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ComponentPreview, "events", {
+        get: function () {
+            return [{
+                    "name": "previewMessage",
+                    "method": "previewMessage",
+                    "bubbles": true,
+                    "cancelable": true,
+                    "composed": true
+                }];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ComponentPreview, "style", {
+        get: function () { return "/**style-placeholder:component-preview:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return ComponentPreview;
+}());
+var debounce = function (fn, wait) {
+    var timeout;
+    return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            args[_i] = arguments[_i];
+        }
+        clearTimeout(timeout);
+        timeout = setTimeout.apply(void 0, [fn, wait].concat(args));
+    };
+};
+export { ComponentPreview };

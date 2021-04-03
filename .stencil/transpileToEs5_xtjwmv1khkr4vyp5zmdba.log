@@ -1,0 +1,259 @@
+App.loadBundle('/**:bundle-id:**/', ['exports', './chunk-143cfdf2.js'], function (exports, __chunk_1) {
+    var h = window.App.h;
+    var ColorGenSelectColors = /** @class */ (function () {
+        function ColorGenSelectColors() {
+            this.activeColor = '';
+            this.colors = [];
+        }
+        ColorGenSelectColors.prototype.toggleActiveColor = function (color) {
+            if (this.activeColor === color) {
+                this.activeColor = '';
+                return;
+            }
+            this.activeColor = color;
+        };
+        ColorGenSelectColors.prototype.render = function () {
+            var _this = this;
+            var listItems = this.colors.map(function (color) {
+                var isOpen = (_this.activeColor === color.name) ? true : false;
+                return (h("li", { class: { 'controls__item': true, 'is-open': isOpen } }, h("color-gen-variable-selector", { name: color.name, property: color.property, value: color.value, isParentOpen: isOpen, onClick: function () {
+                        _this.toggleActiveColor(color.name);
+                    } }), h("svg", { width: "10px", height: "6px", viewBox: "0 0 10 6", version: "1.1", xmlns: "http://www.w3.org/2000/svg" }, h("g", { id: "Welcome", stroke: "none", "stroke-width": "1", fill: "none", "fill-rule": "evenodd", "stroke-linecap": "round", "stroke-linejoin": "round" }, h("g", { id: "Desktop-HD", transform: "translate(-1025.000000, -335.000000)", stroke: "#AEB4BE", "stroke-width": "2" }, h("polyline", { id: "arrow", transform: "translate(1030.000000, 338.000000) rotate(90.000000) translate(-1030.000000, -338.000000) ", points: "1028 334 1032 338.020022 1028 342" })))), h("ul", { class: "controls__sub" }, h("li", null, h("color-gen-variable-selector", { name: color.name + '-shade', property: color.property + '-shade', value: color.shade, editable: false })), h("li", null, h("color-gen-variable-selector", { name: color.name + '-tint', property: color.property + '-tint', value: color.tint, editable: false })))));
+            });
+            return (h("ul", { class: "controls" }, listItems));
+        };
+        Object.defineProperty(ColorGenSelectColors, "is", {
+            get: function () { return "color-gen-select-colors"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColorGenSelectColors, "properties", {
+            get: function () {
+                return {
+                    "activeColor": {
+                        "state": true
+                    },
+                    "colors": {
+                        "type": "Any",
+                        "attr": "colors"
+                    }
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColorGenSelectColors, "style", {
+            get: function () { return "/**style-placeholder:color-gen-select-colors:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return ColorGenSelectColors;
+    }());
+    var COLOR_VARS = [
+        {
+            name: 'Primary',
+            property: '--ion-color-primary'
+        },
+        {
+            name: 'Secondary',
+            property: '--ion-color-secondary'
+        },
+        {
+            name: 'Tertiary',
+            property: '--ion-color-tertiary'
+        },
+        {
+            name: 'Success',
+            property: '--ion-color-success'
+        },
+        {
+            name: 'Warning',
+            property: '--ion-color-warning'
+        },
+        {
+            name: 'Danger',
+            property: '--ion-color-danger'
+        },
+        {
+            name: 'Dark',
+            property: '--ion-color-dark'
+        },
+        {
+            name: 'Medium',
+            property: '--ion-color-medium'
+        },
+        {
+            name: 'Light',
+            property: '--ion-color-light'
+        }
+    ];
+    function generateColor(name, property, value) {
+        var color = new __chunk_1.Color(value);
+        var contrast = color.contrast();
+        var tint = color.tint();
+        var shade = color.shade();
+        return {
+            name: name,
+            property: property,
+            value: value,
+            valueRgb: rgbToString(color.rgb),
+            contrast: contrast.hex,
+            contrastRgb: rgbToString(contrast.rgb),
+            tint: tint.hex,
+            shade: shade.hex,
+        };
+    }
+    function convertCssToColors(cssText) {
+        var colors = [];
+        COLOR_VARS.forEach(function (colorVar) {
+            var attrMap = {
+                value: '',
+                valueRgb: '-rgb',
+                contrast: '-contrast',
+                contrastRgb: '-contrast-rgb',
+                shade: '-shade',
+                tint: '-tint',
+            };
+            var color = Object.assign({}, colorVar);
+            Object.keys(attrMap).forEach(function (key) {
+                color[key] = parseColorVar(colorVar.property + attrMap[key], cssText);
+            });
+            colors.push(color);
+        });
+        return colors;
+    }
+    function updateCssText(colorAttr, cssText, newColorValue) {
+        var oldKeyValue = getCssKeyVal(colorAttr, cssText);
+        var newKeyValue = colorAttr + ": " + newColorValue;
+        cssText = cssText.replace(oldKeyValue, newKeyValue);
+        return cssText;
+    }
+    function parseColorVar(colorAttr, cssText) {
+        var attrKeyVal = getCssKeyVal(colorAttr, cssText);
+        return attrKeyVal.trim().split(':')[1].trim();
+    }
+    function getCssKeyVal(colorAttr, cssText) {
+        var startIndex = cssText.indexOf(colorAttr);
+        var valueSplt = cssText.substring(startIndex + colorAttr.length);
+        var bracketIndex = valueSplt.indexOf('}');
+        var semiColonIndex = valueSplt.indexOf(';');
+        var endIndex = startIndex + colorAttr.length + Math.min(bracketIndex, semiColonIndex);
+        return cssText.substring(startIndex, endIndex);
+    }
+    function rgbToString(c) {
+        return c.r + "," + c.g + "," + c.b;
+    }
+    var ColorGenerator = /** @class */ (function () {
+        function ColorGenerator() {
+            this.colors = [];
+            this.cssText = DEFAULT_CSS_TEXT;
+        }
+        ColorGenerator.prototype.onColorChange = function (ev) {
+            var _this = this;
+            var colorProperty = ev.detail.property;
+            var colorValue = ev.detail.value;
+            var colorIndex = this.colors.findIndex(function (o) { return o.property === colorProperty; });
+            var color = this.colors[colorIndex];
+            var genColor = generateColor(color.name, colorProperty, colorValue);
+            this.colors[colorIndex] = genColor;
+            this.colors = this.colors.slice();
+            var attrMap = {
+                value: '',
+                valueRgb: '-rgb',
+                contrast: '-contrast',
+                contrastRgb: '-contrast-rgb',
+                shade: '-shade',
+                tint: '-tint',
+            };
+            Object.keys(attrMap).forEach(function (key) {
+                _this.cssText = updateCssText(colorProperty + attrMap[key], _this.cssText, genColor[key]);
+            });
+            this.previewMessage.emit({ cssText: this.cssText });
+        };
+        ColorGenerator.prototype.onCssTextChange = function (ev) {
+            this.cssText = ev.detail;
+            var colors = convertCssToColors(this.cssText);
+            if (colors.length > 0) {
+                this.colors = colors;
+                this.previewMessage.emit({ cssText: this.cssText });
+            }
+        };
+        ColorGenerator.prototype.componentWillLoad = function () {
+            this.colors = convertCssToColors(this.cssText);
+        };
+        ColorGenerator.prototype.componentDidLoad = function () {
+            this.previewMessage.emit({
+                cssText: this.cssText
+            });
+        };
+        ColorGenerator.prototype.render = function () {
+            return [
+                h("color-gen-select-colors", { colors: this.colors }),
+                h("color-gen-css-text", { cssText: this.cssText })
+            ];
+        };
+        Object.defineProperty(ColorGenerator, "is", {
+            get: function () { return "color-generator"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColorGenerator, "encapsulation", {
+            get: function () { return "shadow"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColorGenerator, "properties", {
+            get: function () {
+                return {
+                    "colors": {
+                        "state": true
+                    },
+                    "cssText": {
+                        "state": true
+                    },
+                    "el": {
+                        "elementRef": true
+                    }
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColorGenerator, "events", {
+            get: function () {
+                return [{
+                        "name": "previewMessage",
+                        "method": "previewMessage",
+                        "bubbles": true,
+                        "cancelable": true,
+                        "composed": true
+                    }];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColorGenerator, "listeners", {
+            get: function () {
+                return [{
+                        "name": "colorChange",
+                        "method": "onColorChange"
+                    }, {
+                        "name": "cssTextChange",
+                        "method": "onCssTextChange"
+                    }];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(ColorGenerator, "style", {
+            get: function () { return "/**style-placeholder:color-generator:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return ColorGenerator;
+    }());
+    var DEFAULT_CSS_TEXT = "\n:root {\n  --ion-color-primary: #3880ff;\n  --ion-color-primary-rgb: 56,128,255;\n  --ion-color-primary-contrast: #ffffff;\n  --ion-color-primary-contrast-rgb: 255,255,255;\n  --ion-color-primary-shade: #3171e0;\n  --ion-color-primary-tint: #4c8dff;\n\n  --ion-color-secondary: #0cd1e8;\n  --ion-color-secondary-rgb: 12,209,232;\n  --ion-color-secondary-contrast: #ffffff;\n  --ion-color-secondary-contrast-rgb: 255,255,255;\n  --ion-color-secondary-shade: #0bb8cc;\n  --ion-color-secondary-tint: #24d6ea;\n\n  --ion-color-tertiary: #7044ff;\n  --ion-color-tertiary-rgb: 112,68,255;\n  --ion-color-tertiary-contrast: #ffffff;\n  --ion-color-tertiary-contrast-rgb: 255,255,255;\n  --ion-color-tertiary-shade: #633ce0;\n  --ion-color-tertiary-tint: #7e57ff;\n\n  --ion-color-success: #10dc60;\n  --ion-color-success-rgb: 16,220,96;\n  --ion-color-success-contrast: #ffffff;\n  --ion-color-success-contrast-rgb: 255,255,255;\n  --ion-color-success-shade: #0ec254;\n  --ion-color-success-tint: #28e070;\n\n  --ion-color-warning: #ffce00;\n  --ion-color-warning-rgb: 255,206,0;\n  --ion-color-warning-contrast: #ffffff;\n  --ion-color-warning-contrast-rgb: 255,255,255;\n  --ion-color-warning-shade: #e0b500;\n  --ion-color-warning-tint: #ffd31a;\n\n  --ion-color-danger: #f04141;\n  --ion-color-danger-rgb: 245,61,61;\n  --ion-color-danger-contrast: #ffffff;\n  --ion-color-danger-contrast-rgb: 255,255,255;\n  --ion-color-danger-shade: #d33939;\n  --ion-color-danger-tint: #f25454;\n\n  --ion-color-dark: #222428;\n  --ion-color-dark-rgb: 34,34,34;\n  --ion-color-dark-contrast: #ffffff;\n  --ion-color-dark-contrast-rgb: 255,255,255;\n  --ion-color-dark-shade: #1e2023;\n  --ion-color-dark-tint: #383a3e;\n\n  --ion-color-medium: #989aa2;\n  --ion-color-medium-rgb: 152,154,162;\n  --ion-color-medium-contrast: #ffffff;\n  --ion-color-medium-contrast-rgb: 255,255,255;\n  --ion-color-medium-shade: #86888f;\n  --ion-color-medium-tint: #a2a4ab;\n\n  --ion-color-light: #f4f5f8;\n  --ion-color-light-rgb: 244,244,244;\n  --ion-color-light-contrast: #000000;\n  --ion-color-light-contrast-rgb: 0,0,0;\n  --ion-color-light-shade: #d7d8da;\n  --ion-color-light-tint: #f5f6f9;\n}\n".trim();
+    exports.ColorGenSelectColors = ColorGenSelectColors;
+    exports.ColorGenerator = ColorGenerator;
+    Object.defineProperty(exports, '__esModule', { value: true });
+});

@@ -1,0 +1,65 @@
+import { h } from '../app.core.js';
+var ColorGenPreview = /** @class */ (function () {
+    function ColorGenPreview() {
+    }
+    ColorGenPreview.prototype.applyStyles = function () {
+        if (this.iframe && this.iframe.contentDocument && this.iframe.contentDocument.documentElement) {
+            var iframeDoc = this.iframe.contentDocument;
+            var varStyleId = 'color-gen-style';
+            var themerStyle = iframeDoc.getElementById(varStyleId);
+            if (!themerStyle) {
+                themerStyle = iframeDoc.createElement('style');
+                themerStyle.id = varStyleId;
+                iframeDoc.documentElement.appendChild(themerStyle);
+            }
+            themerStyle.innerHTML = this.cssText;
+        }
+    };
+    ColorGenPreview.prototype.onCssTextChange = function () {
+        this.applyStyles();
+    };
+    ColorGenPreview.prototype.onIframeLoad = function () {
+        this.applyStyles();
+    };
+    ColorGenPreview.prototype.render = function () {
+        var _this = this;
+        var url = "/docs/theming/color-gen/demo/index.html?ionic:mode=" + this.demoMode;
+        return [
+            h("div", null, h("iframe", { src: url, ref: function (el) { return _this.iframe = el; }, onLoad: this.onIframeLoad.bind(this) }))
+        ];
+    };
+    Object.defineProperty(ColorGenPreview, "is", {
+        get: function () { return "color-gen-preview"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ColorGenPreview, "encapsulation", {
+        get: function () { return "shadow"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ColorGenPreview, "properties", {
+        get: function () {
+            return {
+                "cssText": {
+                    "type": String,
+                    "attr": "css-text",
+                    "watchCallbacks": ["onCssTextChange"]
+                },
+                "demoMode": {
+                    "type": String,
+                    "attr": "demo-mode"
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ColorGenPreview, "style", {
+        get: function () { return "/**style-placeholder:color-gen-preview:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return ColorGenPreview;
+}());
+export { ColorGenPreview };

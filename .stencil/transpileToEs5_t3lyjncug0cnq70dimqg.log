@@ -1,0 +1,755 @@
+import { h } from '../app.core.js';
+import { a as current, c as versions, b as apiMap } from './chunk-1858c0c6.js';
+import { e as NewTab, f as Arrow, g as Checkmark, c as Ionic } from './chunk-fd2edfe7.js';
+function u(n, t) {
+    for (var e, r, i = null, o = !1, u = !1, f = arguments.length; f-- > 2;)
+        T.push(arguments[f]);
+    for (; T.length > 0;) {
+        var c = T.pop();
+        if (c && void 0 !== c.pop)
+            for (f = c.length; f--;)
+                T.push(c[f]);
+        else
+            "boolean" == typeof c && (c = null), (u = "function" != typeof n) && (null == c ? c = "" : "number" == typeof c ? c = String(c) : "string" != typeof c && (u = !1)), u && o ? i[i.length - 1].vtext += c : null === i ? i = [u ? { vtext: c } : c] : i.push(u ? { vtext: c } : c), o = u;
+    }
+    if (null != t) {
+        if (t.className && (t.class = t.className), "object" == typeof t.class) {
+            for (f in t.class)
+                t.class[f] && T.push(f);
+            t.class = T.join(" "), T.length = 0;
+        }
+        null != t.key && (e = t.key), null != t.name && (r = t.name);
+    }
+    return "function" == typeof n ? n(t, i || [], W) : { vtag: n, vchildren: i, vtext: void 0, vattrs: t, vkey: e, vname: r, w: void 0, g: !1 };
+}
+function f(n) { return { vtag: n.vtag, vchildren: n.vchildren, vtext: n.vtext, vattrs: n.vattrs, vkey: n.vkey, vname: n.vname }; }
+var T = [], W = { forEach: function (n, t) { n.forEach(function (n, e, r) { return t(f(n), e, r); }); }, map: function (n, t) { return n.map(function (n, e, r) { return function i(n) { return { vtag: n.vtag, vchildren: n.vchildren, vtext: n.vtext, vattrs: n.vattrs, vkey: n.vkey, vname: n.vname }; }(t(f(n), e, r)); }); } };
+/*! Built with http://stenciljs.com */
+var __rest = function (s, e) {
+    var t = {};
+    for (var p in s)
+        if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+            t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++)
+            if (e.indexOf(p[i]) < 0)
+                t[p[i]] = s[p[i]];
+    return t;
+};
+function defaultConsumerRender(subscribe, renderer) {
+    return u("context-consumer", { subscribe: subscribe, renderer: renderer });
+}
+function createProviderConsumer(defaultState, consumerRender) {
+    if (consumerRender === void 0) {
+        consumerRender = defaultConsumerRender;
+    }
+    var listeners = new Map();
+    var currentState = defaultState;
+    function notifyConsumers() {
+        listeners.forEach(updateListener);
+    }
+    function updateListener(fields, listener) {
+        if (Array.isArray(fields)) {
+            fields.slice().forEach(function (fieldName) {
+                listener[fieldName] = currentState[fieldName];
+            });
+        }
+        else {
+            listener[fields] = Object.assign({}, currentState);
+        }
+        listener.forceUpdate();
+    }
+    function attachListener(propList) {
+        return function (el) {
+            if (listeners.has(el)) {
+                return;
+            }
+            listeners.set(el, propList);
+            updateListener(propList, el);
+        };
+    }
+    function subscribe(el, propList) {
+        attachListener(propList)(el);
+        return function () {
+            listeners.delete(el);
+        };
+    }
+    var Provider = function (_b, children) {
+        var state = _b.state;
+        currentState = state;
+        notifyConsumers();
+        return children;
+    };
+    var Consumer = function (props, children) {
+        return consumerRender(subscribe, children[0]);
+    };
+    function wrapConsumer(childComponent, fieldList) {
+        var Child = childComponent.is;
+        return function (_a) {
+            var children = _a.children, props = __rest(_a, ["children"]);
+            return (u(Child, Object.assign({ ref: attachListener(fieldList) }, props), children));
+        };
+    }
+    function injectProps(childComponent, fieldList) {
+        var unsubscribe = null;
+        var elementRefName = Object.keys(childComponent.properties).find(function (propName) {
+            return childComponent.properties[propName].elementRef == true;
+        });
+        if (elementRefName == undefined) {
+            throw new Error("Please ensure that your Component " + childComponent.is + " has an attribute with an \"@Element\" decorator. " +
+                "This is required to be able to inject properties.");
+        }
+        var prevComponentWillLoad = childComponent.prototype.componentWillLoad;
+        childComponent.prototype.componentWillLoad = function () {
+            unsubscribe = subscribe(this[elementRefName], fieldList);
+            if (prevComponentWillLoad) {
+                return prevComponentWillLoad.bind(this)();
+            }
+        };
+        var prevComponentDidUnload = childComponent.prototype.componentDidUnload;
+        childComponent.prototype.componentDidUnload = function () {
+            unsubscribe();
+            if (prevComponentDidUnload) {
+                return prevComponentDidUnload.bind(this)();
+            }
+        };
+    }
+    return {
+        Provider: Provider,
+        Consumer: Consumer,
+        wrapConsumer: wrapConsumer,
+        injectProps: injectProps
+    };
+}
+// StencilStateTunnel: ES Module
+var ActiveRouter = createProviderConsumer({
+    historyType: 'browser',
+    location: {
+        pathname: '',
+        query: {},
+        key: ''
+    },
+    titleSuffix: '',
+    root: '/',
+    routeViewsUpdated: function () { }
+});
+function injectHistory(Component) {
+    ActiveRouter.injectProps(Component, ['history', 'location']);
+}
+// stencilrouter: ES Module
+var commandMenu = {
+    "build": "/docs/cli/commands/build",
+    "capacitor add": "/docs/cli/commands/capacitor-add",
+    "capacitor copy": "/docs/cli/commands/capacitor-copy",
+    "capacitor open": "/docs/cli/commands/capacitor-open",
+    "capacitor run": "/docs/cli/commands/capacitor-run",
+    "capacitor sync": "/docs/cli/commands/capacitor-sync",
+    "capacitor update": "/docs/cli/commands/capacitor-update",
+    "config get": "/docs/cli/commands/config-get",
+    "config set": "/docs/cli/commands/config-set",
+    "config unset": "/docs/cli/commands/config-unset",
+    "cordova build": "/docs/cli/commands/cordova-build",
+    "cordova compile": "/docs/cli/commands/cordova-compile",
+    "cordova emulate": "/docs/cli/commands/cordova-emulate",
+    "cordova platform": "/docs/cli/commands/cordova-platform",
+    "cordova plugin": "/docs/cli/commands/cordova-plugin",
+    "cordova prepare": "/docs/cli/commands/cordova-prepare",
+    "cordova requirements": "/docs/cli/commands/cordova-requirements",
+    "cordova resources": "/docs/cli/commands/cordova-resources",
+    "cordova run": "/docs/cli/commands/cordova-run",
+    "deploy build": "/docs/cli/commands/deploy-build",
+    "docs": "/docs/cli/commands/docs",
+    "doctor check": "/docs/cli/commands/doctor-check",
+    "doctor list": "/docs/cli/commands/doctor-list",
+    "doctor treat": "/docs/cli/commands/doctor-treat",
+    "generate": "/docs/cli/commands/generate",
+    "git remote": "/docs/cli/commands/git-remote",
+    "info": "/docs/cli/commands/info",
+    "init": "/docs/cli/commands/init",
+    "integrations disable": "/docs/cli/commands/integrations-disable",
+    "integrations enable": "/docs/cli/commands/integrations-enable",
+    "integrations list": "/docs/cli/commands/integrations-list",
+    "link": "/docs/cli/commands/link",
+    "login": "/docs/cli/commands/login",
+    "logout": "/docs/cli/commands/logout",
+    "package build": "/docs/cli/commands/package-build",
+    "repair": "/docs/cli/commands/repair",
+    "serve": "/docs/cli/commands/serve",
+    "signup": "/docs/cli/commands/signup",
+    "ssh add": "/docs/cli/commands/ssh-add",
+    "ssh delete": "/docs/cli/commands/ssh-delete",
+    "ssh generate": "/docs/cli/commands/ssh-generate",
+    "ssh list": "/docs/cli/commands/ssh-list",
+    "ssh setup": "/docs/cli/commands/ssh-setup",
+    "ssh use": "/docs/cli/commands/ssh-use",
+    "ssl generate": "/docs/cli/commands/ssl-generate",
+    "start": "/docs/cli/commands/start"
+};
+var cliMenu = {
+    'Overview': '/docs/cli',
+    'Configuration': '/docs/cli/configuration',
+    'Using a Proxy': '/docs/cli/using-a-proxy',
+    'Change Log': 'https://github.com/ionic-team/ionic-cli/blob/master/packages/ionic/CHANGELOG.md',
+};
+var nativeMenu = {
+    "3D Touch": "/docs/native/three-dee-touch",
+    "ABBYY Real-Time Recognition": "/docs/native/abbyy-rtr",
+    "Action Sheet": "/docs/native/action-sheet",
+    "AdMob Free": "/docs/native/admob-free",
+    "AdMob Pro": "/docs/native/admob-pro",
+    "AES256": "/docs/native/aes-256",
+    "Alipay": "/docs/native/alipay",
+    "Analytics Firebase": "/docs/native/analytics-firebase",
+    "Android ExoPlayer": "/docs/native/android-exoplayer",
+    "Android Fingerprint Auth": "/docs/native/android-fingerprint-auth",
+    "Android Full Screen": "/docs/native/android-full-screen",
+    "Android Permissions": "/docs/native/android-permissions",
+    "Answers": "/docs/native/fabric",
+    "App Availability": "/docs/native/app-availability",
+    "App Center Analytics": "/docs/native/app-center-analytics",
+    "App Center Crashes": "/docs/native/app-center-crashes",
+    "App Center Push": "/docs/native/app-center-push",
+    "App Minimize": "/docs/native/app-minimize",
+    "App Preferences": "/docs/native/app-preferences",
+    "App Rate": "/docs/native/app-rate",
+    "App Update": "/docs/native/app-update",
+    "App Version": "/docs/native/app-version",
+    "Apple Pay": "/docs/native/apple-pay",
+    "Apple Wallet": "/docs/native/apple-wallet",
+    "Appodeal": "/docs/native/appodeal",
+    "Appsflyer": "/docs/native/appsflyer",
+    "Autostart": "/docs/native/autostart",
+    "Background Fetch": "/docs/native/background-fetch",
+    "Background Geolocation": "/docs/native/background-geolocation",
+    "Background Mode": "/docs/native/background-mode",
+    "Backlight": "/docs/native/backlight",
+    "Badge": "/docs/native/badge",
+    "Barcode Scanner": "/docs/native/barcode-scanner",
+    "Base64": "/docs/native/base64",
+    "Base64 To Gallery": "/docs/native/base64-to-gallery",
+    "Battery Status": "/docs/native/battery-status",
+    "BLE": "/docs/native/ble",
+    "BlinkId": "/docs/native/blinkid",
+    "BlinkUp": "/docs/native/blinkup",
+    "Bluetooth Serial": "/docs/native/bluetooth-serial",
+    "BluetoothLE": "/docs/native/bluetooth-le",
+    "Braintree": "/docs/native/braintree",
+    "BranchIo": "/docs/native/branch-io",
+    "Brightness": "/docs/native/brightness",
+    "Broadcaster": "/docs/native/broadcaster",
+    "Browser Tab": "/docs/native/browser-tab",
+    "Calendar": "/docs/native/calendar",
+    "Call Directory": "/docs/native/call-directory",
+    "Call Log": "/docs/native/call-log",
+    "Call Number": "/docs/native/call-number",
+    "Camera": "/docs/native/camera",
+    "Camera Preview": "/docs/native/camera-preview",
+    "Card IO": "/docs/native/card-io",
+    "Chooser": "/docs/native/chooser",
+    "Class Kit": "/docs/native/class-kit",
+    "CleverTap": "/docs/native/clevertap",
+    "Clipboard": "/docs/native/clipboard",
+    "Cloud Settings": "/docs/native/cloud-settings",
+    "Code Push": "/docs/native/code-push",
+    "Contacts": "/docs/native/contacts",
+    "Couchbase Lite": "/docs/native/couchbase-lite",
+    "Crop": "/docs/native/crop",
+    "Date Picker": "/docs/native/date-picker",
+    "DB Meter": "/docs/native/db-meter",
+    "Deeplinks": "/docs/native/deeplinks",
+    "Device": "/docs/native/device",
+    "Device Accounts": "/docs/native/device-accounts",
+    "Device Feedback": "/docs/native/device-feedback",
+    "Device Motion": "/docs/native/device-motion",
+    "Device Orientation": "/docs/native/device-orientation",
+    "Diagnostic": "/docs/native/diagnostic",
+    "Dialogs": "/docs/native/dialogs",
+    "DNS": "/docs/native/dns",
+    "Document Viewer": "/docs/native/document-viewer",
+    "Downloader": "/docs/native/downloader",
+    "Email Composer": "/docs/native/email-composer",
+    "Estimote Beacons\n": "/docs/native/estimote-beacons",
+    "Extended Device Information": "/docs/native/extended-device-information",
+    "Facebook": "/docs/native/facebook",
+    "FCM": "/docs/native/fcm",
+    "File": "/docs/native/file",
+    "File Chooser": "/docs/native/file-chooser",
+    "File Encryption": "/docs/native/file-encryption",
+    "File Opener": "/docs/native/file-opener",
+    "File Path": "/docs/native/file-path",
+    "File Transfer\n": "/docs/native/file-transfer",
+    "Fingerprint AIO": "/docs/native/fingerprint-aio",
+    "Firebase": "/docs/native/firebase",
+    "Firebase Analytics": "/docs/native/firebase-analytics",
+    "Firebase Authentication": "/docs/native/firebase-authentication",
+    "Firebase Config": "/docs/native/firebase-config",
+    "Firebase Dynamic Links": "/docs/native/firebase-dynamic-links",
+    "Firebase Messaging": "/docs/native/firebase-messaging",
+    "Flashlight": "/docs/native/flashlight",
+    "Flurry Analytics": "/docs/native/flurry-analytics",
+    "FTP": "/docs/native/ftp",
+    "Geofence": "/docs/native/geofence",
+    "Geolocation": "/docs/native/geolocation",
+    "Globalization": "/docs/native/globalization",
+    "Google Analytics": "/docs/native/google-analytics",
+    "Google Maps": "https://github.com/ionic-team/ionic-native-google-maps/blob/master/documents/README.md",
+    "Google Nearby": "/docs/native/google-nearby",
+    "Google Play Games Services": "/docs/native/google-play-games-services",
+    "Google Plus": "/docs/native/google-plus",
+    "Gyroscope": "/docs/native/gyroscope",
+    "hce": "/docs/native/hce",
+    "Header Color": "/docs/native/header-color",
+    "Health": "/docs/native/health",
+    "Health Kit": "/docs/native/health-kit",
+    "Hot Code Push": "/docs/native/hot-code-push",
+    "Hotspot": "/docs/native/hotspot",
+    "HTTP": "/docs/native/http",
+    "Httpd": "/docs/native/httpd",
+    "HyperTrack": "/docs/native/hyper-track",
+    "IBeacon": "/docs/native/ibeacon",
+    "Image Picker": "/docs/native/image-picker",
+    "Image Resizer": "/docs/native/image-resizer",
+    "In App Browser": "/docs/native/in-app-browser",
+    "In App Purchase": "/docs/native/in-app-purchase",
+    "In App Purchase 2": "/docs/native/in-app-purchase-2",
+    "In App Review": "/docs/native/in-app-review",
+    "Index App Content": "/docs/native/index-app-content",
+    "Insomnia": "/docs/native/insomnia",
+    "Instagram": "/docs/native/instagram",
+    "Intel Security": "/docs/native/intel-security",
+    "Intercom": "/docs/native/intercom",
+    "Ionic Webview": "/docs/native/ionic-webview",
+    "iOS DocumentPicker": "/docs/native/document-picker",
+    "iOS File Picker": "/docs/native/file-picker",
+    "Is Debug": "/docs/native/is-debug",
+    "jAnalytics": "/docs/native/janalytics",
+    "Jins Meme": "/docs/native/jins-meme",
+    "Keyboard": "/docs/native/keyboard",
+    "Keychain": "/docs/native/keychain",
+    "Keychain Touch Id": "/docs/native/keychain-touch-id",
+    "LastCam": "/docs/native/last-cam",
+    "Launch Navigator": "/docs/native/launch-navigator",
+    "Launch Review": "/docs/native/launch-review",
+    "Line Login": "/docs/native/line-login",
+    "LinkedIn": "/docs/native/linkedin",
+    "Local Notifications": "/docs/native/local-notifications",
+    "Location Accuracy": "/docs/native/location-accuracy",
+    "Market": "/docs/native/market",
+    "Media": "/docs/native/media",
+    "Media Capture": "/docs/native/media-capture",
+    "Mixpanel": "/docs/native/mixpanel",
+    "Mobile Accessibility": "/docs/native/mobile-accessibility",
+    "MS ADAL": "/docs/native/ms-adal",
+    "Music Controls": "/docs/native/music-controls",
+    "Native Audio": "/docs/native/native-audio",
+    "Native Geocoder": "/docs/native/native-geocoder",
+    "Native Keyboard": "/docs/native/native-keyboard",
+    "Native Page Transitions": "/docs/native/native-page-transitions",
+    "Native Ringtones": "/docs/native/native-ringtones",
+    "Native Storage": "/docs/native/native-storage",
+    "Navigation Bar": "/docs/native/navigation-bar",
+    "Network": "/docs/native/network",
+    "Network Interface": "/docs/native/network-interface",
+    "NFC": "/docs/native/nfc",
+    "OneSignal": "/docs/native/onesignal",
+    "Open Native Settings": "/docs/native/open-native-settings",
+    "OpenALPR": "/docs/native/openalpr",
+    "Overview": "/docs/native",
+    "PayPal": "/docs/native/paypal",
+    "Pedometer": "/docs/native/pedometer",
+    "Phonegap Local Notification": "/docs/native/phonegap-local-notification",
+    "Photo Library": "/docs/native/photo-library",
+    "Photo Viewer": "/docs/native/photo-viewer",
+    "Pin Check": "/docs/native/pin-check",
+    "Pin Dialog": "/docs/native/pin-dialog",
+    "Pinterest": "/docs/native/pinterest",
+    "Power Management": "/docs/native/power-management",
+    "Printer": "/docs/native/printer",
+    "Pro": "/docs/native/pro",
+    "Push": "/docs/native/push",
+    "QQSDK": "/docs/native/qqsdk",
+    "QR Scanner": "/docs/native/qr-scanner",
+    "Regula Document Reader": "/docs/native/regula-document-reader",
+    "Rollbar": "/docs/native/rollbar",
+    "Safari View Controller": "/docs/native/safari-view-controller",
+    "Screen Orientation": "/docs/native/screen-orientation",
+    "Screenshot": "/docs/native/screenshot",
+    "Secure Storage": "/docs/native/secure-storage",
+    "Sensors": "/docs/native/sensors",
+    "Serial": "/docs/native/serial",
+    "Shake": "/docs/native/shake",
+    "Sim": "/docs/native/sim",
+    "Siri Shortcuts": "/docs/native/siri-shortcuts",
+    "SMS": "/docs/native/sms",
+    "Social Sharing": "/docs/native/social-sharing",
+    "Speech Recognition": "/docs/native/speech-recognition",
+    "SpeechKit": "/docs/native/speechkit",
+    "Spinner Dialog": "/docs/native/spinner-dialog",
+    "Splash Screen": "/docs/native/splash-screen",
+    "SQLite\n": "/docs/native/sqlite",
+    "Sqlite Db Copy": "/docs/native/sqlite-db-copy",
+    "SQLite Porter": "/docs/native/sqlite-porter",
+    "StarPRNT": "/docs/native/star-prnt",
+    "Status Bar": "/docs/native/status-bar",
+    "Stepcounter": "/docs/native/stepcounter",
+    "Streaming Media": "/docs/native/streaming-media",
+    "Stripe": "/docs/native/stripe",
+    "Taptic Engine": "/docs/native/taptic-engine",
+    "Tealium": "/docs/native/tealium",
+    "TealiumAdIdentifier": "/docs/native/tealium-adidentifier",
+    "TealiumInstallReferrer": "/docs/native/tealium-installreferrer",
+    "Text To Speech": "/docs/native/text-to-speech",
+    "Themeable Browser": "/docs/native/themeable-browser",
+    "Toast": "/docs/native/toast",
+    "Touch ID": "/docs/native/touch-id",
+    "Twitter Connect": "/docs/native/twitter-connect",
+    "Uid": "/docs/native/uid",
+    "Unique Device ID": "/docs/native/unique-device-id",
+    "Uptime": "/docs/native/uptime",
+    "User Agent": "/docs/native/user-agent",
+    "Vibration": "/docs/native/vibration",
+    "Video Capture Plus": "/docs/native/video-capture-plus",
+    "Video Editor": "/docs/native/video-editor",
+    "Video Player": "/docs/native/video-player",
+    "Web Intent": "/docs/native/web-intent",
+    "Web Server": "/docs/native/web-server",
+    "Webengage": "/docs/native/webengage",
+    "Wechat": "/docs/native/wechat",
+    "WheelSelector Plugin": "/docs/native/wheel-selector",
+    "Youtube Video Player": "/docs/native/youtube-video-player",
+    "ZBar": "/docs/native/zbar",
+    "Zeroconf": "/docs/native/zeroconf",
+    "Zip": "/docs/native/zip"
+};
+var main = {
+    'Home': '/docs/',
+    'Introduction': {
+        'What is Ionic Framework': '/docs/intro',
+        'Core Concepts': '/docs/intro/concepts',
+        'Browser Support': '/docs/intro/browser-support',
+        'Versioning': '/docs/intro/versioning',
+        'Support': '/docs/intro/support'
+    },
+    'Installation': {
+        'CLI Installation': '/docs/installation/cli',
+        'Packages & CDN': '/docs/installation/cdn',
+        'Environment Setup': '/docs/installation/environment',
+        'iOS Setup': '/docs/installation/ios',
+        'Android Setup': '/docs/installation/android',
+    },
+    'Building': {
+        'Starting': '/docs/building/starting',
+        'Scaffolding': '/docs/building/scaffolding',
+        'Migration': '/docs/building/migration',
+        'Cross Platform': '/docs/building/cross-platform',
+        'Running Overview': '/docs/building/running',
+        'Running on iOS': '/docs/building/ios',
+        'Running on Android': '/docs/building/android',
+        'Testing': '/docs/building/testing',
+        'Contributing': '/docs/building/contributing',
+        'Web View': '/docs/building/webview',
+        'Ionic Storage': '/docs/building/storage',
+    },
+    'Components': '/docs/components',
+    'Layout': {
+        'Structure': '/docs/layout/structure',
+        'Responsive Grid': '/docs/layout/grid',
+        'CSS Utilities': '/docs/layout/css-utilities'
+    },
+    'Theming': {
+        'Basics': '/docs/theming/basics',
+        'Platform Styles': '/docs/theming/platform-styles',
+        'CSS Variables': '/docs/theming/css-variables',
+        'Color Generator': '/docs/theming/color-generator',
+        'Advanced': '/docs/theming/advanced'
+    },
+    'Navigation': {
+        'Angular': '/docs/navigation/angular',
+    },
+    'Publishing': {
+        'Progressive Web App': '/docs/publishing/progressive-web-app',
+        'iOS App Store': '/docs/publishing/app-store',
+        'Android Play Store': '/docs/publishing/play-store',
+        'Electron Desktop App': '/docs/publishing/desktop-app'
+    },
+    'FAQ': {
+        'Glossary': '/docs/faq/glossary',
+        'Build Errors': '/docs/faq/build',
+        'Runtime Errors': '/docs/faq/runtime',
+        'Native Errors': '/docs/faq/native',
+        'Developer Tips': '/docs/faq/tips',
+        'Changelog': 'https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md'
+    },
+    'Dev Resources': {
+        'Books': '/docs/developer-resources/books',
+        'Courses': '/docs/developer-resources/courses',
+        'Guides': '/docs/developer-resources/guides',
+        'Posts': '/docs/developer-resources/posts',
+        'Tools': '/docs/developer-resources/tools',
+        'Videos': '/docs/developer-resources/videos',
+    }
+};
+var pro = {
+    'Home': '/docs/',
+    'Introduction': {
+        'Getting Started': '/docs/pro',
+        'Git Workflow': '/docs/pro/basics/git'
+    },
+    'Builds': {
+        'Build Types': '/docs/pro/builds/intro',
+        'Build Environments': '/docs/pro/builds/environments'
+    },
+    'Deploy': {
+        'Introduction': '/docs/pro/deploy/intro',
+        'Installation': '/docs/pro/deploy/setup',
+        'Channels': '/docs/pro/deploy/channels',
+        'API Reference': '/docs/pro/deploy/api'
+    },
+    'Package': {
+        'Introduction': '/docs/pro/package/intro',
+        'Credentials': '/docs/pro/package/credentials',
+        'Builds': '/docs/pro/package/intro#performing-a-build'
+    },
+    'Automation': {
+        'Introduction': '/docs/pro/automation/intro',
+        'Manage': '/docs/pro/automation/create',
+        'Webhooks': '/docs/pro/automation/webhooks'
+    },
+};
+var outbound = {
+    'API Reference': '/docs/api',
+    'CLI Documentation': '/docs/cli',
+    'Native APIs': '/docs/native'
+};
+var DocsMenu = /** @class */ (function () {
+    function DocsMenu() {
+        var _this = this;
+        this.version = current;
+        this.createItem = function (text, url, onClick) {
+            return (h("li", null, url.indexOf('http') === 0 ?
+                h("span", { class: "menu__item" }, h("a", { href: url, target: "_blank" }, text, h(NewTab, null)))
+                :
+                    h("stencil-route-link", { class: "menu__item", onClick: onClick, activeClass: "menu__item--active", url: url, strict: false, exact: true }, text)));
+        };
+        this.createSubmenu = function (text, items, onClick) {
+            return (h("li", null, h("a", { class: "menu__item", onClick: onClick }, text), h("ul", { class: { 'menu__submenu': true, 'is-open': _this.activeItem === text } }, Object.keys(items).map(function (key) { return _this.createItem(key, items[key]); }))));
+        };
+        this.createOutboundItem = function (text, url, onClick) {
+            return (h("li", null, h("stencil-route-link", { class: "menu__item menu__item--outbound", onClick: onClick, url: url, exact: true }, text, h("svg", { viewBox: "0 0 16 24" }, h("path", { d: "M3 2l10 10L3 22", "stroke-width": "3", fill: "none", "fill-rule": "evenodd" })))));
+        };
+        this.onVersionChange = this.onVersionChange.bind(this);
+    }
+    DocsMenu.prototype.setActiveItem = function (item) {
+        this.activeItem = item;
+    };
+    DocsMenu.prototype.toggleActiveItem = function (item) {
+        if (this.activeItem === item) {
+            this.activeItem = null;
+            return;
+        }
+        this.setActiveItem(item);
+    };
+    DocsMenu.prototype.setActiveItemFromPath = function (path) {
+        var keyMap = main;
+        if (path.includes('/pro')) {
+            keyMap = pro;
+        }
+        var topLevelKeys = Object.keys(keyMap);
+        var activeKey = topLevelKeys.find(function (key) {
+            var items = keyMap[key];
+            if (typeof (items) === 'string' && items.split('#')[0] === path)
+                return true;
+            return Object.keys(items).some(function (itemKey) { return items[itemKey].split('#')[0] === path; });
+        });
+        this.setActiveItem(activeKey);
+    };
+    DocsMenu.prototype.onVersionChange = function (e) {
+        this.version = e.target.value;
+        this.history.push("/docs/api", {});
+    };
+    DocsMenu.prototype.componentDidLoad = function () {
+        this.setActiveItemFromPath(this.path);
+    };
+    DocsMenu.prototype.getMenuBySection = function (section) {
+        var _this = this;
+        switch (section) {
+            case 'api':
+                var api_1 = apiMap[this.version];
+                return [
+                    h("div", { class: "api-version-selector" }, h("strong", null, "API"), h("label", null, this.version, h("select", { onChange: function (e) { return _this.onVersionChange(e); } }, versions.map(function (version) { return (h("option", { value: version, selected: version === _this.version }, version)); })), h("svg", { viewBox: "0 0 33 22" }, h("polygon", { points: "16.5 22 0 0 33 0" })))),
+                    h("stencil-route-link", { class: "menu__breadcrumb", url: "/docs/" }, h("svg", { viewBox: "0 0 16 24" }, h("path", { d: "M13 22L3 12 13 2", "stroke-width": "3", fill: "none", "fill-rule": "evenodd" })), "Docs"),
+                    h("ul", null, h("li", null, h("span", { class: "menu__item menu__item--static" }, "API Reference"), h("ul", { class: "menu__submenu is-open" }, this.createItem('Overview', '/docs/api'), Object.keys(api_1 || {}).sort().map(function (key) { return _this.createItem(key, api_1[key]); }))))
+                ];
+            case 'native':
+                return [
+                    h("stencil-route-link", { class: "menu__breadcrumb", url: "/docs/" }, h("svg", { viewBox: "0 0 16 24" }, h("path", { d: "M13 22L3 12 13 2", "stroke-width": "3", fill: "none", "fill-rule": "evenodd" })), "Docs"),
+                    h("ul", null, h("li", null, h("span", { class: "menu__item menu__item--static" }, "Native APIs"), h("ul", { class: "menu__submenu is-open" }, Object.keys(nativeMenu).map(function (key) { return _this.createItem(key, nativeMenu[key]); }))))
+                ];
+            case 'cli':
+                return [
+                    h("stencil-route-link", { class: "menu__breadcrumb", url: "/docs/" }, h("svg", { viewBox: "0 0 16 24" }, h("path", { d: "M13 22L3 12 13 2", "stroke-width": "3", fill: "none", "fill-rule": "evenodd" })), "Docs"),
+                    h("ul", null, h("li", null, h("span", { class: "menu__item menu__item--static" }, "CLI Documentation"), h("ul", { class: "menu__submenu is-open" }, Object.keys(cliMenu).map(function (key) { return _this.createItem(key, cliMenu[key]); })), h("span", { class: "menu__item menu__item--static" }, "Command Reference"), h("ul", { class: "menu__submenu is-open" }, Object.keys(commandMenu).map(function (key) { return _this.createItem(h("code", null, key), commandMenu[key]); }))))
+                ];
+            case 'pro':
+                return [
+                    h("ul", null, Object.keys(pro).map(function (key) {
+                        var val = pro[key];
+                        var onClick = function () { return _this.toggleActiveItem(key); };
+                        var renderer = typeof val === 'string' ? _this.createItem : _this.createSubmenu;
+                        return renderer(key, val, onClick);
+                    })),
+                    h("ul", null, h("li", { style: { marginTop: '1.5rem' } }, h("stencil-route-link", { class: "menu__item menu__item--outbound migration-pill", url: "/docs/building/migration", exact: true }, "v4 Migration Guide", h("svg", { viewBox: "0 0 16 24" }, h("path", { d: "M3 2l10 10L3 22", "stroke-width": "3", fill: "none", "fill-rule": "evenodd" })))))
+                ];
+            case 'framework':
+            default:
+                return [
+                    h("ul", null, Object.keys(main).map(function (key) {
+                        var val = main[key];
+                        var onClick = function () { return _this.toggleActiveItem(key); };
+                        var renderer = typeof val === 'string' ? _this.createItem : _this.createSubmenu;
+                        return renderer(key, val, onClick);
+                    })),
+                    h("ul", null, Object.keys(outbound).map(function (key) {
+                        var onClick = function () { return _this.setActiveItem(null); };
+                        return _this.createOutboundItem(key, outbound[key], onClick);
+                    }), h("li", { style: { marginTop: '1.5rem' } }, h("stencil-route-link", { class: "menu__item menu__item--outbound migration-pill", url: "/docs/building/migration", exact: true }, "v4 Migration Guide", h("svg", { viewBox: "0 0 16 24" }, h("path", { d: "M3 2l10 10L3 22", "stroke-width": "3", fill: "none", "fill-rule": "evenodd" })))))
+                ];
+        }
+    };
+    DocsMenu.prototype.render = function () {
+        return [
+            h("section-switch", { section: this.section }),
+            h("nav", { class: "menu" }, this.getMenuBySection(this.section))
+        ];
+    };
+    Object.defineProperty(DocsMenu, "is", {
+        get: function () { return "docs-menu"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DocsMenu, "properties", {
+        get: function () {
+            return {
+                "activeItem": {
+                    "state": true
+                },
+                "el": {
+                    "elementRef": true
+                },
+                "history": {
+                    "type": "Any",
+                    "attr": "history"
+                },
+                "path": {
+                    "type": String,
+                    "attr": "path",
+                    "watchCallbacks": ["setActiveItemFromPath"]
+                },
+                "section": {
+                    "type": String,
+                    "attr": "section"
+                },
+                "version": {
+                    "state": true
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DocsMenu, "style", {
+        get: function () { return "/**style-placeholder:docs-menu:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return DocsMenu;
+}());
+injectHistory(DocsMenu);
+var SectionSwitch = /** @class */ (function () {
+    function SectionSwitch() {
+    }
+    SectionSwitch.prototype.renderSelector = function (dropdown) {
+        var _this = this;
+        var activeItem = dropdown.items.find(function (item) { return item.sections.includes(_this.section); });
+        var selected = activeItem ? activeItem.title : 'Framework';
+        return (h("div", { class: { 'section-switch__selector': true, 'is-open': dropdown.isOpen } }, h("a", { class: "section-switch__logo", href: "/docs/" }, h(Ionic, null), h("span", null, "Docs")), h("span", { class: "section-switch__selected", onClick: dropdown.toggle }, selected, h(Arrow, null)), h("span", { class: "section-switch__badge" }, "v4 BETA")));
+    };
+    SectionSwitch.prototype.renderPanel = function (dropdown) {
+        var _this = this;
+        return (h("ul", { class: { 'section-switch__panel': true, 'is-open': dropdown.isOpen } }, dropdown.items.map(function (item) {
+            var isActive = item.sections.includes(_this.section);
+            var onClick = dropdown.close;
+            return (h("li", { class: {
+                    'section-switch__item': true,
+                    'section-switch__item--outbound': item.outbound,
+                    'section-switch__item--active': isActive
+                } }, _this.renderItem(Object.assign({}, item, { isActive: isActive, onClick: onClick }))));
+        })));
+    };
+    SectionSwitch.prototype.renderItem = function (item) {
+        if (item.outbound) {
+            return (h("a", { href: item.url, target: "_blank", onClick: item.onClick }, h("strong", { class: "section-switch__title" }, item.title), h("span", { class: "section-switch__subtitle" }, item.subtitle, h(NewTab, null))));
+        }
+        return (h("stencil-route-link", { url: item.url, onClick: item.onClick }, h("div", null, h("strong", { class: "section-switch__title" }, item.title), h("span", { class: "section-switch__subtitle" }, item.subtitle)), h("div", { class: "section-switch__active-icon" }, item.isActive ? h(Checkmark, null) : null)));
+    };
+    SectionSwitch.prototype.render = function () {
+        var _this = this;
+        return (h("ctrl-dropdown", { class: "section-switch", autoClose: true, items: options, renderer: function (dropdown) { return [
+                _this.renderSelector(dropdown),
+                _this.renderPanel(dropdown)
+            ]; } }));
+    };
+    Object.defineProperty(SectionSwitch, "is", {
+        get: function () { return "section-switch"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SectionSwitch, "properties", {
+        get: function () {
+            return {
+                "section": {
+                    "type": String,
+                    "attr": "section"
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SectionSwitch, "style", {
+        get: function () { return "/**style-placeholder:section-switch:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return SectionSwitch;
+}());
+var options = [
+    {
+        title: 'Framework',
+        subtitle: 'The UI Toolkit for building highly performant apps',
+        url: '/docs/',
+        sections: ['framework', 'api', 'cli']
+    },
+    {
+        title: 'Appflow',
+        subtitle: 'Integrated suite of tools & services for shipping apps',
+        url: 'https://ionicframework.com/docs/appflow/',
+        sections: ['appflow'],
+        outbound: true
+    },
+    {
+        title: 'Stencil',
+        subtitle: 'Reusable web component compiler',
+        url: 'https://stenciljs.com',
+        sections: [],
+        outbound: true
+    },
+    {
+        title: 'Capacitor',
+        subtitle: 'Cross-platform Native SDK Container',
+        url: 'https://capacitor.ionicframework.com/',
+        sections: [],
+        outbound: true
+    }
+];
+export { DocsMenu, SectionSwitch };

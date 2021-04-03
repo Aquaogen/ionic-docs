@@ -1,0 +1,1 @@
+command-output span.bold,command-output span.bold a{font-family:var(--font-family-code-medium);font-weight:700;color:#fff}command-output span.green{color:#8ae26e}command-output span.cyan{color:#c3b3f9}command-output span.yellow{color:#fffdb2}

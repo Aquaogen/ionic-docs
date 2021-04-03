@@ -1,0 +1,1 @@
+const e=window.App.h;class t{render(){return[e("div",{class:"label"},this.language||""),e("div",{class:"scroll-area"},e("pre",null,e("code",null,e("slot",null))))]}static get is(){return"code-block"}static get properties(){return{language:{type:String,attr:"language"}}}static get style(){return"/**style-placeholder:code-block:**/"}}export{t as CodeBlock};

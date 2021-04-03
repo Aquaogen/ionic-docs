@@ -1,0 +1,1 @@
+{"moduleFile":{"sourceFilePath":"C:/Users/Administrator/Desktop/ionic-docs-v1/src/versions.ts","localImports":[],"externalImports":[],"potentialCmpRefs":[],"hasSlot":false,"hasSvg":false,"jsFilePath":"C:/Users/Administrator/Desktop/ionic-docs-v1/src/versions.js"},"jsText":"export const versions = [\r\n    '4.0.0-rc.1'\r\n];\r\nexport const current = '4.0.0-rc.1';\r\n"}

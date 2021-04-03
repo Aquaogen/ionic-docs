@@ -1,0 +1,312 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+App.loadBundle('/**:bundle-id:**/', ['exports', './chunk-7f0a9d14.js'], function (exports, __chunk_4) {
+    var h = window.App.h;
+    var items = [
+        {
+            text: 'GitHub',
+            url: 'https://github.com/ionic-team/ionic',
+            className: 'github'
+        },
+        {
+            text: 'Forum',
+            url: 'https://forum.ionicframework.com/',
+            className: 'forum'
+        },
+        {
+            text: 'Chat',
+            url: 'https://ionicworldwide.herokuapp.com/',
+            className: 'chat'
+        },
+        {
+            text: 'Blog',
+            url: 'https://blog.ionicframework.com/',
+            className: 'blog'
+        },
+        {
+            text: 'Twitter',
+            url: 'https://twitter.com/Ionicframework',
+            className: 'twitter'
+        },
+        {
+            text: 'Stack',
+            url: 'https://stackoverflow.com/questions/tagged/ionic-framework',
+            className: 'stack-overflow'
+        },
+        {
+            text: 'Swag',
+            url: 'https://shop.ionicframework.com/',
+            className: 'swag'
+        }
+    ];
+    var CommunityDropdown = function () { return (h("ctrl-dropdown", { class: "community-dropdown", autoClose: true, items: items, renderer: function (dropdown) { return [
+            h("a", { class: "community-dropdown__toggle", onClick: dropdown.toggle }, "Community", h("svg", { viewBox: "0 0 33 22" }, h("polygon", { points: "16.5 22 0 0 33 0" }))),
+            h("a", { class: "community-dropdown__mobile-toggle", onClick: dropdown.toggle }, dropdown.isOpen ? h(__chunk_4.Close, null) : h(__chunk_4.More, null)),
+            h("div", { class: { 'community-dropdown__panel': true, 'is-open': dropdown.isOpen } }, h("div", { class: "community-dropdown__title" }, "Community"), h("ul", null, dropdown.items.map(function (item) {
+                var _a;
+                return (h("li", { class: (_a = { 'community-dropdown__item': true }, _a[item.className] = true, _a) }, h("a", { href: item.url, target: "_blank" }, item.text)));
+            })), h("stencil-route-link", { url: "/docs/", class: "community-dropdown__home", onClick: dropdown.close }, h("svg", { viewBox: "0 0 16 24" }, h("path", { d: "M3 2l10 10L3 22", "stroke-width": "3", fill: "none", "fill-rule": "evenodd" })), "Home"))
+        ]; } })); };
+    var DocsHeader = /** @class */ (function () {
+        function DocsHeader() {
+            this.isMenuOpen = false;
+        }
+        DocsHeader.prototype.getGithubLink = function (section) {
+            switch (section) {
+                case 'cli':
+                    return 'https://github.com/ionic-team/ionic-cli';
+                default:
+                    return 'https://github.com/ionic-team/ionic';
+            }
+        };
+        DocsHeader.prototype.render = function () {
+            return (h("nav", null, h("button", { onClick: this.onToggleClick, class: "menu-toggle" }, this.isMenuOpen ? h(__chunk_4.Close, null) : h(__chunk_4.Menu, null)), h("a", { href: "/docs/", class: "docs-logo" }, h(__chunk_4.Ionic, null), h("span", null, "Docs")), h("ionic-search", null), h(CommunityDropdown, null), h("a", { href: this.getGithubLink(this.section), class: "github-link", target: "_blank" }, "GitHub", h(__chunk_4.NewTab, null))));
+        };
+        Object.defineProperty(DocsHeader, "is", {
+            get: function () { return "docs-header"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(DocsHeader, "properties", {
+            get: function () {
+                return {
+                    "isMenuOpen": {
+                        "type": Boolean,
+                        "attr": "is-menu-open"
+                    },
+                    "onToggleClick": {
+                        "type": "Any",
+                        "attr": "on-toggle-click"
+                    },
+                    "section": {
+                        "type": String,
+                        "attr": "section"
+                    }
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(DocsHeader, "style", {
+            get: function () { return "/**style-placeholder:docs-header:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return DocsHeader;
+    }());
+    var IonicSearch = /** @class */ (function () {
+        function IonicSearch() {
+            this.active = false;
+            this.query = '';
+            this.pending = 0;
+            this.results = null;
+            this.selectedIndex = -1;
+            this.focused = false;
+            this.dragY = null;
+            this.startY = null;
+            this.screenHeight = null;
+            this.URLS = function () {
+                var api = 'https://api.swiftype.com/api/v1/public/engines/';
+                var key = '9oVyaKGPzxoZAyUo9Sm8';
+                return {
+                    autocomplete: function (query) { return api + "suggest.json?q=" + query + "&engine_key=" + key; },
+                    search: function (query) { return api + "search.json?q=" + query + "&engine_key=" + key; }
+                };
+            };
+            this.close = this.close.bind(this);
+            this.onKeyDown = this.onKeyDown.bind(this);
+            this.focus = this.focus.bind(this);
+            this.urls = this.URLS();
+        }
+        IonicSearch.prototype.close = function () {
+            var _this = this;
+            this.active = false;
+            this.query = '';
+            this.focused = false;
+            this.selectedIndex = -1;
+            this.el.querySelector('input').value = '';
+            this.el.classList.remove('active');
+            this.el.querySelector('input').blur();
+            setTimeout(function () {
+                _this.results = null;
+            }, 500, this);
+        };
+        IonicSearch.prototype.onKeyDown = function (e) {
+            return __awaiter(this, void 0, void 0, function () {
+                var selector, link, query, resp, res;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            if (e.keyCode === 27) {
+                                this.close();
+                                return [2 /*return*/];
+                            }
+                            if (e.keyCode === 38 && this.selectedIndex > 0) {
+                                this.selectedIndex--;
+                                e.preventDefault();
+                                return [2 /*return*/];
+                            }
+                            if (e.keyCode === 40 &&
+                                this.selectedIndex <
+                                    this.results.beta.length + this.results.main.length - 1) {
+                                this.selectedIndex++;
+                                e.preventDefault();
+                                return [2 /*return*/];
+                            }
+                            if (e.keyCode === 13) {
+                                selector = "li a[data-index=\"" + this.selectedIndex + "\"]";
+                                link = this.el.querySelector(selector);
+                                if (link) {
+                                    link.click();
+                                }
+                                return [2 /*return*/];
+                            }
+                            query = this.query = e.target.value;
+                            if (e.target.value.length < 3) {
+                                this.results = null;
+                                return [2 /*return*/];
+                            }
+                            this.pending++;
+                            return [4 /*yield*/, fetch(this.urls.autocomplete(query))];
+                        case 1:
+                            resp = _a.sent();
+                            return [4 /*yield*/, resp.json()];
+                        case 2:
+                            res = _a.sent();
+                            this.pending--;
+                            this.results = res.records.page.reduce(function (groups, item) {
+                                if (!groups.beta) {
+                                    groups = { beta: [], main: [] };
+                                }
+                                if (item.url.indexOf('beta.ionicframework.com') !== -1) {
+                                    groups.beta.push(item);
+                                }
+                                else {
+                                    groups.main.push(item);
+                                }
+                                return groups;
+                            });
+                            return [2 /*return*/];
+                    }
+                });
+            });
+        };
+        IonicSearch.prototype.focus = function () {
+            var input = document.getElementById('search-input');
+            if (input) {
+                input.focus();
+            }
+        };
+        IonicSearch.prototype.getBoxClass = function () {
+            var str = 'search-box';
+            str += this.query.length > 3 ? ' active' : '';
+            str += this.focused ? ' focused' : '';
+            return str;
+        };
+        IonicSearch.prototype.printResults = function (group, index) {
+            var _this = this;
+            if (index === void 0) { index = 0; }
+            return group.map(function (result, i) { return h("li", { class: "result" }, h("a", { href: result.url, title: result.title, class: _this.selectedIndex === i + index ? 'selected' : '', "data-index": i + index, onMouseOver: function () { _this.selectedIndex = i + index; } }, h("strong", null, result.title), h("small", { innerHTML: result.highlight.sections }))); });
+        };
+        IonicSearch.prototype.render = function () {
+            var _this = this;
+            return [
+                h("div", { class: this.getBoxClass(), style: this.dragStyles }, h("input", { type: "text", id: "search-input", onKeyUp: this.onKeyDown, onFocus: function () { _this.focused = true; }, placeholder: "Search Ionic.." }), h("ion-icon", { class: "search-static " + (this.active ? ' active' : ''), name: "md-search" }), h("ion-icon", { class: "close " + (this.query.length ? ' active' : ''), name: "close-circle", onClick: this.close }), this.results !== null ? h("ul", null, this.results.beta.length ?
+                    h("li", { class: "title" }, "beta.ionicframework.com")
+                    : null, this.printResults(this.results.beta), this.results.main.length ?
+                    h("li", { class: "title" }, "ionicframework.com")
+                    : null, this.printResults(this.results.main, this.results.beta.length), this.results.length === 0 ?
+                    h("li", null, h("span", { class: "no-results" }, "No results"))
+                    : null) : null, this.pending > 0 ? h("span", { class: "searching" }) : null),
+                h("ion-icon", { class: "search-mobile-toggle " + (this.focused ? ' focused' : ''), onClick: this.focus, name: "md-search" }),
+                h("div", { class: "scroll-block " + (this.focused ? ' focused' : ''), onClick: this.close })
+            ];
+        };
+        Object.defineProperty(IonicSearch, "is", {
+            get: function () { return "ionic-search"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(IonicSearch, "properties", {
+            get: function () {
+                return {
+                    "active": {
+                        "state": true
+                    },
+                    "contentEl": {
+                        "state": true
+                    },
+                    "dragStyles": {
+                        "state": true
+                    },
+                    "el": {
+                        "elementRef": true
+                    },
+                    "focused": {
+                        "state": true
+                    },
+                    "mobile": {
+                        "type": Boolean,
+                        "attr": "mobile"
+                    },
+                    "pending": {
+                        "state": true
+                    },
+                    "query": {
+                        "state": true
+                    },
+                    "results": {
+                        "state": true
+                    },
+                    "selectedIndex": {
+                        "state": true
+                    }
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(IonicSearch, "style", {
+            get: function () { return "/**style-placeholder:ionic-search:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return IonicSearch;
+    }());
+    exports.DocsHeader = DocsHeader;
+    exports.IonicSearch = IonicSearch;
+    Object.defineProperty(exports, '__esModule', { value: true });
+});

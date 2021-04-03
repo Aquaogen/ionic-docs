@@ -1,0 +1,202 @@
+{
+  "namespace": "App",
+  "fsNamespace": "app",
+  "loader": "../app.js",
+  "core": "app.bmsraorw.js",
+  "corePolyfilled": "app.us5nhyhd.js",
+  "components": {
+    "card-link": {
+      "bundleIds": {
+        "$": "mye6qlil"
+      }
+    },
+    "code-block": {
+      "bundleIds": {
+        "$": "0o4dbyfw"
+      }
+    },
+    "code-color": {
+      "bundleIds": {
+        "$": "u5mlef24"
+      }
+    },
+    "code-preview": {
+      "bundleIds": {
+        "$": "fgaerooj"
+      }
+    },
+    "color-accordion": {
+      "bundleIds": {
+        "$": "owqrtmlm"
+      }
+    },
+    "color-gen-css-text": {
+      "bundleIds": {
+        "$": "47nekmx6"
+      }
+    },
+    "color-gen-preview": {
+      "bundleIds": {
+        "$": "0x9zssqw"
+      },
+      "encapsulation": "shadow"
+    },
+    "color-gen-select-colors": {
+      "bundleIds": {
+        "$": "rchrrjdp"
+      }
+    },
+    "color-gen-variable-selector": {
+      "bundleIds": {
+        "$": "ugiazswe"
+      },
+      "encapsulation": "shadow"
+    },
+    "color-generator": {
+      "bundleIds": {
+        "$": "rchrrjdp"
+      },
+      "encapsulation": "shadow"
+    },
+    "command-cursor": {
+      "bundleIds": {
+        "$": "me8dzaou"
+      }
+    },
+    "command-line": {
+      "bundleIds": {
+        "$": "z5xpyaqx"
+      },
+      "encapsulation": "shadow"
+    },
+    "command-output": {
+      "bundleIds": {
+        "$": "jex4i8iy"
+      }
+    },
+    "command-prompt": {
+      "bundleIds": {
+        "$": "zpjnusjw"
+      }
+    },
+    "component-preview": {
+      "bundleIds": {
+        "$": "aa12mr6c"
+      }
+    },
+    "ctrl-dropdown": {
+      "bundleIds": {
+        "$": "evwktve5"
+      }
+    },
+    "docs-content": {
+      "bundleIds": {
+        "$": "24vz7stq"
+      }
+    },
+    "docs-document": {
+      "bundleIds": {
+        "$": "nszuygjf"
+      }
+    },
+    "docs-footer": {
+      "bundleIds": {
+        "$": "nszuygjf"
+      }
+    },
+    "docs-header": {
+      "bundleIds": {
+        "$": "797wcsuk"
+      }
+    },
+    "docs-layout": {
+      "bundleIds": {
+        "$": "24vz7stq"
+      }
+    },
+    "docs-menu": {
+      "bundleIds": {
+        "$": "hyqtqrlw"
+      }
+    },
+    "docs-preview": {
+      "bundleIds": {
+        "$": "24vz7stq"
+      }
+    },
+    "docs-root": {
+      "bundleIds": {
+        "$": "24vz7stq"
+      }
+    },
+    "file-tree": {
+      "bundleIds": {
+        "$": "mkc45zu0"
+      },
+      "encapsulation": "shadow"
+    },
+    "file-tree-directory": {
+      "bundleIds": {
+        "$": "crupjmsd"
+      },
+      "encapsulation": "shadow"
+    },
+    "file-tree-file": {
+      "bundleIds": {
+        "$": "if6nn9po"
+      },
+      "encapsulation": "shadow"
+    },
+    "img-zoom": {
+      "bundleIds": {
+        "$": "qbyj9yvk"
+      },
+      "encapsulation": "shadow"
+    },
+    "ionic-search": {
+      "bundleIds": {
+        "$": "797wcsuk"
+      }
+    },
+    "layered-colors-select": {
+      "bundleIds": {
+        "$": "u5mlef24"
+      }
+    },
+    "loading-indicator": {
+      "bundleIds": {
+        "$": "nszuygjf"
+      }
+    },
+    "section-switch": {
+      "bundleIds": {
+        "$": "hyqtqrlw"
+      }
+    },
+    "stencil-route": {
+      "bundleIds": {
+        "$": "24vz7stq"
+      }
+    },
+    "stencil-route-link": {
+      "bundleIds": {
+        "$": "evwktve5"
+      }
+    },
+    "stencil-router": {
+      "bundleIds": {
+        "$": "24vz7stq"
+      }
+    },
+    "stepped-color-generator": {
+      "bundleIds": {
+        "$": "bp4i7tms"
+      }
+    },
+    "tab-group": {
+      "bundleIds": {
+        "$": "qf47eaoy"
+      }
+    }
+  }
+}

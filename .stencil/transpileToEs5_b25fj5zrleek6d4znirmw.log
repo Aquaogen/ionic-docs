@@ -1,0 +1,41 @@
+import { h } from '../app.core.js';
+var CodePreview = /** @class */ (function () {
+    function CodePreview() {
+        this.markup = '';
+        this.inline = false;
+    }
+    CodePreview.prototype.render = function () {
+        if (this.inline) {
+            return h("div", { innerHTML: unescape(this.markup) });
+        }
+        return h("iframe", { src: "data:text/html," + encodeURIComponent("\n        <!DOCTYPE html>\n        <html>\n          <head>\n            <style>body{margin:0;}</style>\n            <link rel=\"stylesheet\" href=\"https://unpkg.com/@ionic/core/css/ionic.bundle.css\"/>\n            <script src=\"https://unpkg.com/@ionic/core/dist/ionic.js\"></script>\n          </head>\n          <body>" + unescape(this.markup) + "</body>\n        </html>\n      ") });
+    };
+    Object.defineProperty(CodePreview, "is", {
+        get: function () { return "code-preview"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CodePreview, "properties", {
+        get: function () {
+            return {
+                "inline": {
+                    "type": Boolean,
+                    "attr": "inline"
+                },
+                "markup": {
+                    "type": String,
+                    "attr": "markup"
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CodePreview, "style", {
+        get: function () { return "/**style-placeholder:code-preview:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return CodePreview;
+}());
+export { CodePreview };

@@ -1,0 +1,54 @@
+import { h } from '../app.core.js';
+var FileTreeFile = /** @class */ (function () {
+    function FileTreeFile() {
+    }
+    Object.defineProperty(FileTreeFile.prototype, "extname", {
+        get: function () {
+            var dots = this.name.split('.');
+            return dots.length > 1 ? dots[dots.length - 1] : '';
+        },
+        enumerable: true,
+        configurable: true
+    });
+    FileTreeFile.prototype.hostData = function () {
+        var _a;
+        return {
+            class: (_a = {},
+                _a['file'] = true,
+                _a["extname-" + this.extname] = this.extname.length > 0,
+                _a),
+        };
+    };
+    FileTreeFile.prototype.render = function () {
+        return (h("div", { class: "name" }, this.name));
+    };
+    Object.defineProperty(FileTreeFile, "is", {
+        get: function () { return "file-tree-file"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileTreeFile, "encapsulation", {
+        get: function () { return "shadow"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileTreeFile, "properties", {
+        get: function () {
+            return {
+                "name": {
+                    "type": String,
+                    "attr": "name"
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileTreeFile, "style", {
+        get: function () { return "/**style-placeholder:file-tree-file:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return FileTreeFile;
+}());
+export { FileTreeFile };

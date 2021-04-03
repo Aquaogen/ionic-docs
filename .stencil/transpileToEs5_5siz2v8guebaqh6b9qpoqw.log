@@ -1,0 +1,51 @@
+import { h } from '../app.core.js';
+var CardLink = /** @class */ (function () {
+    function CardLink() {
+        this.hasIcon = false;
+    }
+    CardLink.prototype.hostData = function () {
+        var _a;
+        return {
+            'class': (_a = {
+                    'has-icon': this.hasIcon
+                },
+                _a["card-" + this.headline.toLowerCase().replace(' ', '-')] = true,
+                _a)
+        };
+    };
+    CardLink.prototype.render = function () {
+        return (h("stencil-route-link", { url: this.url, title: this.headline }, h("strong", { class: "card-link__title" }, this.headline), h("span", { class: "card-link__body" }, h("slot", null))));
+    };
+    Object.defineProperty(CardLink, "is", {
+        get: function () { return "card-link"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CardLink, "properties", {
+        get: function () {
+            return {
+                "hasIcon": {
+                    "type": Boolean,
+                    "attr": "has-icon"
+                },
+                "headline": {
+                    "type": String,
+                    "attr": "headline"
+                },
+                "url": {
+                    "type": String,
+                    "attr": "url"
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CardLink, "style", {
+        get: function () { return "/**style-placeholder:card-link:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return CardLink;
+}());
+export { CardLink };

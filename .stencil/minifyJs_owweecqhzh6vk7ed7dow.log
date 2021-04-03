@@ -1,0 +1,1 @@
+const t=window.App.h;class e{render(){return t("slot",null)}static get is(){return"command-prompt"}static get style(){return"/**style-placeholder:command-prompt:**/"}}export{e as CommandPrompt};

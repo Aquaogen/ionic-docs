@@ -1,0 +1,25 @@
+import { h } from '../app.core.js';
+var FileTree = /** @class */ (function () {
+    function FileTree() {
+    }
+    FileTree.prototype.render = function () {
+        return h("slot", null);
+    };
+    Object.defineProperty(FileTree, "is", {
+        get: function () { return "file-tree"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileTree, "encapsulation", {
+        get: function () { return "shadow"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(FileTree, "style", {
+        get: function () { return "/**style-placeholder:file-tree:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return FileTree;
+}());
+export { FileTree };

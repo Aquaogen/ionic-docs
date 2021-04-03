@@ -1,0 +1,63 @@
+import { h } from '../app.core.js';
+var ColorAccordion = /** @class */ (function () {
+    function ColorAccordion() {
+        this.colors = ['primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', 'dark', 'medium', 'light'];
+        this.activeColor = '';
+    }
+    ColorAccordion.prototype.toggleActiveColor = function (color) {
+        if (this.activeColor === color) {
+            this.activeColor = '';
+            return;
+        }
+        this.activeColor = color;
+    };
+    ColorAccordion.prototype.render = function () {
+        var _this = this;
+        var listItems = this.colors.map(function (color) {
+            var isActive = (_this.activeColor === color) ? true : false;
+            var baseColor = getComputedStyle(_this.el).getPropertyValue("--ion-color-" + color);
+            var shadeColor = getComputedStyle(_this.el).getPropertyValue("--ion-color-" + color + "-shade");
+            var tintColor = getComputedStyle(_this.el).getPropertyValue("--ion-color-" + color + "-tint");
+            return (h("li", { class: {
+                    'color-menu-item': true,
+                    'color-menu-item-active': isActive
+                }, style: {
+                    'background-color': "var(--ion-color-" + color + ")",
+                    'color': "var(--ion-color-" + color + "-contrast)"
+                } }, h("div", { class: "color-menu-text", onClick: function () { return _this.toggleActiveColor(color); } }, color[0].toUpperCase() + color.substr(1), h("div", { class: "color-menu-value" }, baseColor)), h("svg", { width: "10px", height: "6px", viewBox: "0 0 10 6", version: "1.1", xmlns: "http://www.w3.org/2000/svg" }, h("g", { id: "Welcome", stroke: "none", "stroke-width": "1", fill: "none", "fill-rule": "evenodd", "stroke-linecap": "round", "stroke-linejoin": "round" }, h("g", { id: "Desktop-HD", transform: "translate(-1025.000000, -335.000000)", stroke: "currentColor", "stroke-width": "2" }, h("polyline", { id: "arrow", transform: "translate(1030.000000, 338.000000) rotate(90.000000) translate(-1030.000000, -338.000000) ", points: "1028 334 1032 338.020022 1028 342" })))), h("ul", { class: "color-submenu" }, h("li", { class: "color-submenu-item", style: {
+                    'background-color': "var(--ion-color-" + color + "-shade)",
+                    'color': "var(--ion-color-" + color + "-contrast)"
+                } }, h("div", { class: "color-menu-text" }, "Shade", h("div", { class: "color-menu-value" }, shadeColor))), h("li", { class: "color-submenu-item", style: {
+                    'background-color': "var(--ion-color-" + color + "-tint)",
+                    'color': "var(--ion-color-" + color + "-contrast)"
+                } }, h("div", { class: "color-menu-text" }, "Tint", h("div", { class: "color-menu-value" }, tintColor))))));
+        });
+        return (h("ul", { class: "color-menu" }, listItems));
+    };
+    Object.defineProperty(ColorAccordion, "is", {
+        get: function () { return "color-accordion"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ColorAccordion, "properties", {
+        get: function () {
+            return {
+                "activeColor": {
+                    "state": true
+                },
+                "el": {
+                    "elementRef": true
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ColorAccordion, "style", {
+        get: function () { return "/**style-placeholder:color-accordion:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return ColorAccordion;
+}());
+export { ColorAccordion };

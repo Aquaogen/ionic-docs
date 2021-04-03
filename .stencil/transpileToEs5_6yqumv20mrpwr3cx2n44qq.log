@@ -1,0 +1,23 @@
+App.loadBundle('/**:bundle-id:**/', ['exports'], function (exports) {
+    var h = window.App.h;
+    var CommandOutput = /** @class */ (function () {
+        function CommandOutput() {
+        }
+        CommandOutput.prototype.render = function () {
+            return h("slot", null);
+        };
+        Object.defineProperty(CommandOutput, "is", {
+            get: function () { return "command-output"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(CommandOutput, "style", {
+            get: function () { return "/**style-placeholder:command-output:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return CommandOutput;
+    }());
+    exports.CommandOutput = CommandOutput;
+    Object.defineProperty(exports, '__esModule', { value: true });
+});

@@ -1,0 +1,40 @@
+App.loadBundle('/**:bundle-id:**/', ['exports'], function (exports) {
+    var h = window.App.h;
+    var CommandLine = /** @class */ (function () {
+        function CommandLine() {
+        }
+        CommandLine.prototype.hostData = function () {
+            return {
+                class: { blink: this.blink },
+            };
+        };
+        CommandLine.prototype.render = function () {
+            return '█';
+        };
+        Object.defineProperty(CommandLine, "is", {
+            get: function () { return "command-cursor"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(CommandLine, "properties", {
+            get: function () {
+                return {
+                    "blink": {
+                        "type": Boolean,
+                        "attr": "blink"
+                    }
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(CommandLine, "style", {
+            get: function () { return "/**style-placeholder:command-cursor:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return CommandLine;
+    }());
+    exports.CommandCursor = CommandLine;
+    Object.defineProperty(exports, '__esModule', { value: true });
+});

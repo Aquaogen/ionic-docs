@@ -1,0 +1,63 @@
+import { h } from '../app.core.js';
+var ImgZoom = /** @class */ (function () {
+    function ImgZoom() {
+        this.zoomed = false;
+    }
+    ImgZoom.prototype.onImageClick = function () {
+        this.zoomed = !this.zoomed;
+    };
+    ImgZoom.prototype.onKeyUp = function (event) {
+        if (event.code === 'Escape') {
+            this.zoomed = false;
+        }
+    };
+    ImgZoom.prototype.hostData = function () {
+        return {
+            class: { 'is-zoomed': this.zoomed },
+        };
+    };
+    ImgZoom.prototype.render = function () {
+        return h("slot", null);
+    };
+    Object.defineProperty(ImgZoom, "is", {
+        get: function () { return "img-zoom"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ImgZoom, "encapsulation", {
+        get: function () { return "shadow"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ImgZoom, "properties", {
+        get: function () {
+            return {
+                "zoomed": {
+                    "state": true
+                }
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ImgZoom, "listeners", {
+        get: function () {
+            return [{
+                    "name": "click",
+                    "method": "onImageClick"
+                }, {
+                    "name": "window:keyup",
+                    "method": "onKeyUp"
+                }];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(ImgZoom, "style", {
+        get: function () { return "/**style-placeholder:img-zoom:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return ImgZoom;
+}());
+export { ImgZoom };

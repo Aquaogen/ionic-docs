@@ -1,0 +1,1 @@
+class t{hostData(){return{class:{blink:this.blink}}}render(){return"█"}static get is(){return"command-cursor"}static get properties(){return{blink:{type:Boolean,attr:"blink"}}}static get style(){return"/**style-placeholder:command-cursor:**/"}}export{t as CommandCursor};

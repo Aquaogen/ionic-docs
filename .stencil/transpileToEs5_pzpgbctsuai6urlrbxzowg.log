@@ -1,0 +1,20 @@
+import { h } from '../app.core.js';
+var CommandOutput = /** @class */ (function () {
+    function CommandOutput() {
+    }
+    CommandOutput.prototype.render = function () {
+        return h("slot", null);
+    };
+    Object.defineProperty(CommandOutput, "is", {
+        get: function () { return "command-output"; },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(CommandOutput, "style", {
+        get: function () { return "/**style-placeholder:command-output:**/"; },
+        enumerable: true,
+        configurable: true
+    });
+    return CommandOutput;
+}());
+export { CommandOutput };

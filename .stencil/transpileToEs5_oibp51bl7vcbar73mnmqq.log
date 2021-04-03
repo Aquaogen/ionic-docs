@@ -1,0 +1,23 @@
+App.loadBundle('/**:bundle-id:**/', ['exports'], function (exports) {
+    var h = window.App.h;
+    var CommandPrompt = /** @class */ (function () {
+        function CommandPrompt() {
+        }
+        CommandPrompt.prototype.render = function () {
+            return h("slot", null);
+        };
+        Object.defineProperty(CommandPrompt, "is", {
+            get: function () { return "command-prompt"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(CommandPrompt, "style", {
+            get: function () { return "/**style-placeholder:command-prompt:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return CommandPrompt;
+    }());
+    exports.CommandPrompt = CommandPrompt;
+    Object.defineProperty(exports, '__esModule', { value: true });
+});

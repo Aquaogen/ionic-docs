@@ -1,0 +1,133 @@
+App.loadBundle('/**:bundle-id:**/', ['exports'], function (exports) {
+    var h = window.App.h;
+    var VariableSelector = /** @class */ (function () {
+        function VariableSelector() {
+            this.editable = true;
+            this.isParentOpen = false;
+            this.showInputError = false;
+            this.isInputFocused = false;
+        }
+        VariableSelector.prototype.onColorChange = function (ev) {
+            var input = ev.currentTarget;
+            var val = input.value.trim();
+            if (input.matches('[type="text"]') && val[0] !== '#') {
+                input.value = '#' + val;
+                return;
+            }
+            if (input.matches('[type="text"]') && val.length > 7) {
+                input.value = val.substring(0, val.length - 1);
+                return;
+            }
+            if (input.matches('[type="text"]') && val.length !== 7)
+                return;
+            this.value = val;
+            this.colorChange.emit({
+                property: this.property,
+                value: this.value
+            });
+        };
+        VariableSelector.prototype.onInputFocus = function () {
+            this.isInputFocused = true;
+        };
+        VariableSelector.prototype.onInputBlur = function (ev) {
+            var input = ev.currentTarget;
+            this.value = input.value.trim();
+            this.isInputFocused = false;
+        };
+        VariableSelector.prototype.isValidHex = function (str) {
+            return /^#[0-9A-F]{6}$/i.test(str);
+        };
+        VariableSelector.prototype.validate = function () {
+            var isValidHex = this.isValidHex(this.value);
+            this.showInputError = (isValidHex && this.value.length === 7) ? false : true;
+        };
+        VariableSelector.prototype.render = function () {
+            var _this = this;
+            this.validate();
+            return [
+                h("div", { class: {
+                        'color-selector': true,
+                        'color-selector--error': this.showInputError
+                    } }, h("div", { class: "color-selector__name" }, h("i", { class: "color-selector__swatch", style: { 'backgroundColor': this.value } }), this.name), (this.editable)
+                    ?
+                        h("div", { class: "color-selector__form-group" }, h("div", { class: {
+                                'color-selector__input': true,
+                                'color-selector__input--focused': this.isInputFocused
+                            }, onClick: function (ev) {
+                                if (_this.isParentOpen)
+                                    ev.stopPropagation();
+                            } }, h("div", { class: "color-selector__color-wrap", style: { 'backgroundColor': this.value } }, h("input", { type: "color", value: this.value, onInput: this.onColorChange.bind(this), tabindex: "-1" })), h("input", { type: "text", value: this.value, onInput: this.onColorChange.bind(this), onFocus: this.onInputFocus.bind(this), onBlur: this.onInputBlur.bind(this) })), this.showInputError ?
+                            h("span", { class: "color-selector__error" }, "Please enter a valid six digit hex code.")
+                            : '')
+                    :
+                        h("div", { class: "color-selector__hex" }, h("span", null, this.value)))
+            ];
+        };
+        Object.defineProperty(VariableSelector, "is", {
+            get: function () { return "color-gen-variable-selector"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(VariableSelector, "encapsulation", {
+            get: function () { return "shadow"; },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(VariableSelector, "properties", {
+            get: function () {
+                return {
+                    "editable": {
+                        "type": Boolean,
+                        "attr": "editable"
+                    },
+                    "isInputFocused": {
+                        "state": true
+                    },
+                    "isParentOpen": {
+                        "type": Boolean,
+                        "attr": "is-parent-open"
+                    },
+                    "name": {
+                        "type": String,
+                        "attr": "name"
+                    },
+                    "property": {
+                        "type": String,
+                        "attr": "property"
+                    },
+                    "showInputError": {
+                        "state": true
+                    },
+                    "value": {
+                        "type": String,
+                        "attr": "value",
+                        "mutable": true
+                    }
+                };
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(VariableSelector, "events", {
+            get: function () {
+                return [{
+                        "name": "colorChange",
+                        "method": "colorChange",
+                        "bubbles": true,
+                        "cancelable": true,
+                        "composed": true
+                    }];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(VariableSelector, "style", {
+            get: function () { return "/**style-placeholder:color-gen-variable-selector:**/"; },
+            enumerable: true,
+            configurable: true
+        });
+        return VariableSelector;
+    }());
+    exports.ColorGenVariableSelector = VariableSelector;
+    Object.defineProperty(exports, '__esModule', { value: true });
+});
