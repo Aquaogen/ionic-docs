@@ -8,7 +8,7 @@
     "npm": "6.x.x"
   },
   "scripts": {
-    "start": "npm run server",
+    "start": "npm run build && npm run server",
     "build": "stencil build --prerender",
     "dev": "stencil build --dev --serve --watch",
     "lint": "tslint --config tslint.json --project tsconfig.json",
@@ -19,7 +19,6 @@
     "server": "node server/build",
     "server-watch": "sd concurrent \"tsc -p server/tsconfig.json --watch\" \"chokidar 'server/build/**/*.js' -c 'npm run server'\" \"npm run dev\"",
     "preserver": "tsc -p server/tsconfig.json",
-    "heroku-postbuild": "npm run docgen && npm run build",
     "checksum": "npm run predocgen && node scripts/build/scripts/sumchecker",
     "localize": "node scripts/build/scripts/localize",
     "prelocalize": "tsc -p scripts/tsconfig.json",
